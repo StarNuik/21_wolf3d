@@ -1,6 +1,6 @@
 NAME = wolf3d
 SRCS_DIR = srcs/
-SRCS_LIST = draw_wall.c entry.c init_sdl.c init.c exit.c read_map.c render.c pipe.c physics.c event_router.c
+SRCS_LIST = raycast.c draw_wall.c entry.c init_sdl.c init.c exit.c read_textures.c read_map.c render.c pipe.c physics.c event_router.c
 SRCS = $(addprefix $(SRCS_DIR), $(SRCS_LIST))
 OBJS = $(SRCS:.c=.o)
 INCL = -I includes/ -I libft/ `sdl2-config --cflags`

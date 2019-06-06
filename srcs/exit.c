@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 19:52:54 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/06 03:04:52 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/06 07:39:34 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void		clean_sdl(t_data *d)
 {
+	SDL_Log("Commiting isekai...");
 	SDL_DestroyTexture(d->sdl.tex_out);
 	SDL_DestroyRenderer(d->sdl.ren);
 	SDL_DestroyWindow(d->sdl.win);

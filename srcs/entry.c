@@ -6,10 +6,11 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 15:04:09 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/06 02:55:45 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/06 04:54:33 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#define STB_IMAGE_IMPLEMENTATION
 #include "wolf.h"
 
 int		main(void)

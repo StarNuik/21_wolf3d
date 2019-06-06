@@ -6,14 +6,31 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 18:45:34 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/06 03:15:40 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/06 06:09:31 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
+void	init_textures(t_data *d)
+{
+	int		qt;
+
+	qt = -1;
+	while (++qt < TEXTURE_POOL_SIZE)
+	{
+		d->tex_pool[qt].data = NULL;
+		d->tex_pool[qt].width = 0;
+		d->tex_pool[qt].height = 0;
+		d->tex_pool[qt].channels = 0;
+		d->tex_pool[qt].type = STBI_rgb;
+	}
+}
+
 void	init(t_data *d)
 {
+	init_textures(d);
+	read_textures(d);
 	d->map_origin = read_map("abc");
 	//! FIXME Dirty parsing ?
 	d->scene.map_loaded = d->map_origin;

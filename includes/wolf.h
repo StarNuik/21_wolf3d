@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 15:04:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/06 04:43:30 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/06 09:28:33 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # include "libft.h"
 # include <stdio.h>
 # include <SDL.h>
+//? Be careful with this boi
+# include "stb_image.h"
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
@@ -29,7 +31,22 @@
 # define CONTROL_ROTATION_DELTA 0.1
 # define CONTROL_MOVEMENT_DELTA 0.12
 
+# define TEXTURE_POOL_SIZE 16
 # define DEBUG_MAP_SIZE 15
+
+typedef struct		s_color
+{
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+}					t_color;
+
+typedef struct		s_castret
+{
+	float			dist;
+	char			type;
+	t_vector3		hit;
+}					t_raycast;
 
 typedef struct		s_controls
 {
@@ -44,6 +61,15 @@ typedef struct		s_player
 	t_vector3		pos;
 	float			lookAngle;
 }					t_player;
+
+typedef struct		s_texture
+{
+	unsigned char	*data;
+	int				width;
+	int				height;
+	int				channels;
+	int				type;
+}					t_exture;
 
 typedef struct		s_scene
 {
@@ -65,6 +91,7 @@ typedef struct		s_data
 	t_array			*map_origin;
 	t_scene			scene;
 	t_rols			ctrl;
+	t_exture		tex_pool[TEXTURE_POOL_SIZE];
 }					t_data;
 
 void				init_sdl(t_data *d);
@@ -74,7 +101,11 @@ t_array				*read_map(char *path);
 void				general_pipe(t_data *d);
 void				physics_pipe(t_data *d);
 void				render_pipe(t_data *d);
-void				draw_wall(t_data *d, int x, int height);
+void				draw_wall_simple(t_data *d, int x, int height);
+void				draw_wall(t_data *d, int x, int height, t_raycast ray);
 void				event_router(t_data *d);
+void				read_textures(t_data *d);
+t_raycast			raycast(t_data *d, t_vector3 pos, float angle);
+float				raycast_basic(t_data *d, t_vector3 pos, float angle);
 
 #endif
