@@ -1,0 +1,8 @@
+{
+	"files.associations": {
+		"wolf.h": "c",
+		"libft.h": "c",
+		"sdl.h": "c",
+		"stdio.h": "c"
+	}
+}

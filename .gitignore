@@ -1,0 +1,3 @@
+*.o
+wolf3d
+SDL2.framework
