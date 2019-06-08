@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 02:50:29 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/06 04:11:44 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/08 14:09:12 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,21 @@ t_vector3	rotate_vector(t_vector3 in, float angle)
 void		move_player(t_data *d, char dir)
 {
 	t_vector3	dirv;
+	t_raycast	hit[3];
+	float		angle;
+	int			qt;
+	float		dist;
 
 	dirv = (t_vector3){0, 1, 0};
 	dirv = rotate_vector(dirv, d->scene.player0.lookAngle);
 	dirv = ft_v3multnum(&dirv, CONTROL_MOVEMENT_DELTA * (double)dir);
-	d->scene.player0.pos = ft_v3add(&d->scene.player0.pos, &dirv);
+	angle = (dir > 0 ? d->scene.player0.lookAngle : d->scene.player0.lookAngle - 180) - 1;
+	qt = -1;
+	while (++qt < 3)
+		hit[qt] = raycast(d, d->scene.player0.pos, angle++);
+	dist = fmin(hit[0].dist, fmin(hit[1].dist, hit[2].dist));
+	if (dist > CONTROL_COLLISION_DIST)
+		d->scene.player0.pos = ft_v3add(&d->scene.player0.pos, &dirv);
 }
 
 void		physics_pipe(t_data *d)

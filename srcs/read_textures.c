@@ -6,52 +6,31 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 04:57:30 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/06 07:40:00 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/08 14:43:23 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
+void	read_texture_single(t_data *d, char *path, int num)
+{
+	d->tex_pool[num].data = stbi_load(
+		path,
+		&d->tex_pool[num].width,
+		&d->tex_pool[num].height,
+		&d->tex_pool[num].channels,
+		d->tex_pool[num].type);
+	if (!d->tex_pool[num].data)
+		try_exit(d);
+}
+
 void	read_textures(t_data *d)
 {
-	d->tex_pool[0].data = stbi_load(
-		"./textures/Wall_0.bmp",
-		&d->tex_pool[0].width,
-		&d->tex_pool[0].height,
-		&d->tex_pool[0].channels,
-		d->tex_pool[0].type);
-	d->tex_pool[1].data = stbi_load(
-		"./textures/Wall_1.bmp",
-		&d->tex_pool[1].width,
-		&d->tex_pool[1].height,
-		&d->tex_pool[1].channels,
-		d->tex_pool[1].type);
-	d->tex_pool[2].data = stbi_load(
-		"./textures/Wall_2.bmp",
-		&d->tex_pool[2].width,
-		&d->tex_pool[2].height,
-		&d->tex_pool[2].channels,
-		d->tex_pool[2].type);
-	d->tex_pool[3].data = stbi_load(
-		"./textures/Wall_3.bmp",
-		&d->tex_pool[3].width,
-		&d->tex_pool[3].height,
-		&d->tex_pool[3].channels,
-		d->tex_pool[3].type);
-	d->tex_pool[4].data = stbi_load(
-		"./textures/Wall_4.bmp",
-		&d->tex_pool[4].width,
-		&d->tex_pool[4].height,
-		&d->tex_pool[4].channels,
-		d->tex_pool[4].type);
-	d->tex_pool[5].data = stbi_load(
-		"./textures/Wall_5.bmp",
-		&d->tex_pool[5].width,
-		&d->tex_pool[5].height,
-		&d->tex_pool[5].channels,
-		d->tex_pool[5].type);
-	if (!d->tex_pool[0].data || !d->tex_pool[1].data
-	|| !d->tex_pool[2].data || !d->tex_pool[3].data
-	|| !d->tex_pool[4].data || !d->tex_pool[5].data)
-		try_exit(d);
+	read_texture_single(d, "./textures/Wall_0.bmp", 0);
+	read_texture_single(d, "./textures/Wall_1.bmp", 1);
+	read_texture_single(d, "./textures/Wall_2.bmp", 2);
+	read_texture_single(d, "./textures/Wall_3.bmp", 3);
+	read_texture_single(d, "./textures/Wall_4.bmp", 4);
+	read_texture_single(d, "./textures/rem1.png", 5);
+	read_texture_single(d, "./textures/fire.jpg", 6);
 }

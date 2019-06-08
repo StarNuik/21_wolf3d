@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 15:04:09 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/06 04:54:33 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/08 14:03:33 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int		main(void)
 {
 	t_data	d;
 
+	ft_bzero(&d, sizeof(t_data));
 	init(&d);
 	general_pipe(&d);
 	try_exit(&d);

@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 01:32:05 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/06 09:22:47 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/08 14:45:12 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void		draw_wall(t_data *d, int x, int height, t_raycast ray)
 	int				qt;
 
 	tex = d->tex_pool[ray.type - 1];
-
+	if (d->ctrl.zharko)
+		tex = d->tex_pool[6];
 	ray.hit.x = ray.hit.x - floorf(ray.hit.x + 0.5);
 	ray.hit.y = ray.hit.y - floorf(ray.hit.y + 0.5);
 	tex_x = (fabs(ray.hit.x) > fabs(ray.hit.y) ? ray.hit.x : ray.hit.y) * (float)tex.width;

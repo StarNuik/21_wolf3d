@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 07:31:09 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/06 08:09:25 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/07 09:43:40 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ float		raycast_basic(t_data *d, t_vector3 pos, float angle)
 			return (qt);
 		qt += RAYCAST_RESOLUTION;
 	}
-	return (9001.0);
+	return (-9000.1);
 }
 
 t_raycast	raycast(t_data *d, t_vector3 pos, float angle)

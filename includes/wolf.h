@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 15:04:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/06 09:28:33 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/08 14:43:41 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,18 @@
 # define TEX_WIDTH 640
 # define TEX_HEIGHT 480
 
-# define RAYCAST_MAX_DISTANCE 20
-# define RAYCAST_RESOLUTION 0.05
+# define RAYCAST_MAX_DISTANCE 50
+# define RAYCAST_RESOLUTION 0.01
 # define FIELD_OF_VIEW (M_PI / 2)
-# define WALL_HEIGHT_MULT 0.9
+# define WALL_HEIGHT_MULT 0.3
 
 # define CONTROL_ROTATION_DELTA 0.1
 # define CONTROL_MOVEMENT_DELTA 0.12
+// # define CONTROL_MOVEMENT_DELTA 1
+# define CONTROL_COLLISION_DIST 0.3
 
 # define TEXTURE_POOL_SIZE 16
+# define SOUND_POOL_SIZE 4
 # define DEBUG_MAP_SIZE 15
 
 typedef struct		s_color
@@ -54,6 +57,7 @@ typedef struct		s_controls
 	char			backward;
 	char			left;
 	char			right;
+	char			zharko;
 }					t_rols;
 
 typedef struct		s_player
@@ -71,10 +75,21 @@ typedef struct		s_texture
 	int				type;
 }					t_exture;
 
+typedef struct			s_sound
+{
+	SDL_AudioDeviceID	dev;
+	SDL_AudioSpec		spec;
+	Uint8				*buffer;
+	Uint32				length;
+	Uint8				*pos;
+	int					len_left;
+}						t_sound;
+
 typedef struct		s_scene
 {
 	t_player		player0;
 	t_array			*map_loaded;
+	int				track_playing;
 }					t_scene;
 
 typedef struct		s_sdl
@@ -92,6 +107,7 @@ typedef struct		s_data
 	t_scene			scene;
 	t_rols			ctrl;
 	t_exture		tex_pool[TEXTURE_POOL_SIZE];
+	t_sound			sound_pool[SOUND_POOL_SIZE];
 }					t_data;
 
 void				init_sdl(t_data *d);
@@ -107,5 +123,9 @@ void				event_router(t_data *d);
 void				read_textures(t_data *d);
 t_raycast			raycast(t_data *d, t_vector3 pos, float angle);
 float				raycast_basic(t_data *d, t_vector3 pos, float angle);
+void				audio_call(void *userdata, unsigned char *stream, int len);
+void				play_audio(t_data *d, int num);
+void				stop_audio(t_data *d, int num);
+void				read_audio(t_data *d, char *path, int num);
 
 #endif
