@@ -6,14 +6,15 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 04:57:30 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/08 14:43:23 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/09 12:10:27 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-void	read_texture_single(t_data *d, char *path, int num)
+void	read_texture_single(t_data *d, char *path, int num, char load_alpha)
 {
+	d->tex_pool[num].type = (load_alpha ? STBI_rgb_alpha : STBI_rgb);
 	d->tex_pool[num].data = stbi_load(
 		path,
 		&d->tex_pool[num].width,
@@ -26,11 +27,11 @@ void	read_texture_single(t_data *d, char *path, int num)
 
 void	read_textures(t_data *d)
 {
-	read_texture_single(d, "./textures/Wall_0.bmp", 0);
-	read_texture_single(d, "./textures/Wall_1.bmp", 1);
-	read_texture_single(d, "./textures/Wall_2.bmp", 2);
-	read_texture_single(d, "./textures/Wall_3.bmp", 3);
-	read_texture_single(d, "./textures/Wall_4.bmp", 4);
-	read_texture_single(d, "./textures/rem1.png", 5);
-	read_texture_single(d, "./textures/fire.jpg", 6);
+	read_texture_single(d, "./textures/Wall_0.bmp", 0, 0);
+	read_texture_single(d, "./textures/Wall_1.bmp", 1, 0);
+	read_texture_single(d, "./textures/Wall_2.bmp", 2, 0);
+	read_texture_single(d, "./textures/Wall_3.bmp", 3, 0);
+	read_texture_single(d, "./textures/Wall_4.bmp", 4, 0);
+	read_texture_single(d, "./textures/rem1.png", 5, 0);
+	read_texture_single(d, "./textures/fire.jpg", 6, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 15:04:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/08 14:43:41 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/09 10:38:16 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
+// # define WIN_WIDTH 2560
+// # define WIN_HEIGHT 1315
 # define TEX_WIDTH 640
 # define TEX_HEIGHT 480
 
@@ -29,13 +31,15 @@
 # define WALL_HEIGHT_MULT 0.3
 
 # define CONTROL_ROTATION_DELTA 0.1
-# define CONTROL_MOVEMENT_DELTA 0.12
-// # define CONTROL_MOVEMENT_DELTA 1
+# define CONTROL_MOVEMENT_DELTA 0.18
 # define CONTROL_COLLISION_DIST 0.3
 
 # define TEXTURE_POOL_SIZE 16
 # define SOUND_POOL_SIZE 4
 # define DEBUG_MAP_SIZE 15
+
+# define SIN45 (0.70710678118)
+# define COS45 (SIN45)
 
 typedef struct		s_color
 {
@@ -110,22 +114,24 @@ typedef struct		s_data
 	t_sound			sound_pool[SOUND_POOL_SIZE];
 }					t_data;
 
-void				init_sdl(t_data *d);
-void				init(t_data *d);
 void				try_exit(t_data *d);
+void				init(t_data *d);
+void				init_sdl(t_data *d);
 t_array				*read_map(char *path);
+void				read_audio(t_data *d);
+void				read_textures(t_data *d);
 void				general_pipe(t_data *d);
 void				physics_pipe(t_data *d);
 void				render_pipe(t_data *d);
+void				event_router(t_data *d);
+float				raycast_basic(t_data *d, t_vector3 pos, float angle);
+t_raycast			raycast(t_data *d, t_vector3 pos, float angle);
 void				draw_wall_simple(t_data *d, int x, int height);
 void				draw_wall(t_data *d, int x, int height, t_raycast ray);
-void				event_router(t_data *d);
-void				read_textures(t_data *d);
-t_raycast			raycast(t_data *d, t_vector3 pos, float angle);
-float				raycast_basic(t_data *d, t_vector3 pos, float angle);
-void				audio_call(void *userdata, unsigned char *stream, int len);
+void				draw_wall_sky(t_data *d, int x, int height, t_raycast ray);
+void				draw_wall_subj(t_data *d, int x, int height, t_raycast ray);
 void				play_audio(t_data *d, int num);
 void				stop_audio(t_data *d, int num);
-void				read_audio(t_data *d, char *path, int num);
+void				audio_call(void *userdata, unsigned char *stream, int len);
 
 #endif

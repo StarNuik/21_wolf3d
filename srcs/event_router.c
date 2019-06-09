@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 02:35:53 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/08 14:44:32 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/08 15:23:17 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void		key_press_hook(t_data *d)
 		d->ctrl.left = 1;
 	if (key == SDLK_d)
 		d->ctrl.right = 1;
-	if (key == SDLK_r)
+	if (key == SDLK_1)
 	{
 		d->ctrl.zharko = 1;
 		play_audio(d, 2);

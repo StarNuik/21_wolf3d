@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 21:02:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/07 09:42:41 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/09 11:41:41 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ void		render_frame(t_data *d)
 		height = ray.dist * cos(angle - d->scene.player0.lookAngle);
 		height = (float)TEX_HEIGHT / height;
 		// draw_wall_simple(d, x, height);
-		draw_wall(d, x, height, ray);
+		// draw_wall(d, x, height, ray);
+		draw_wall_sky(d, x, height, ray);
+		// draw_wall_subj(d, x, height, ray);
 		angle += angleDelta;
 		x++;
 	}
