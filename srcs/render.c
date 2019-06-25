@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 21:02:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/09 11:41:41 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/25 17:17:21 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,17 @@ void		render_frame(t_data *d)
 	t_raycast	ray;
 
 	SDL_SetRenderDrawColor(d->sdl.ren, 0xff, 0xa0, 0xa0, 0x00);
-	x = 0;
-	angle = d->scene.player0.lookAngle - FIELD_OF_VIEW / 2;
+	x = TEX_WIDTH;
+	angle = d->scene.player.lookAngle - FIELD_OF_VIEW / 2;
 	angleDelta = (float)FIELD_OF_VIEW / (float)TEX_WIDTH;
-	while (x < TEX_WIDTH)
+	while (--x >= 0)
 	{
-		ray = raycast(d, d->scene.player0.pos, angle);
-		height = ray.dist * cos(angle - d->scene.player0.lookAngle);
+		ray = raycast(d, d->scene.player.pos, angle);
+		height = ray.dist * cos(angle - d->scene.player.lookAngle);
 		height = (float)TEX_HEIGHT / height;
-		// draw_wall_simple(d, x, height);
-		// draw_wall(d, x, height, ray);
-		draw_wall_sky(d, x, height, ray);
-		// draw_wall_subj(d, x, height, ray);
+		draw_wall(d, x, height, ray);
 		angle += angleDelta;
-		x++;
+		// x++;
 	}
 	
 }

@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 04:57:30 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/09 12:10:27 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/25 16:58:40 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,17 @@ void	read_texture_single(t_data *d, char *path, int num, char load_alpha)
 
 void	read_textures(t_data *d)
 {
-	read_texture_single(d, "./textures/Wall_0.bmp", 0, 0);
-	read_texture_single(d, "./textures/Wall_1.bmp", 1, 0);
-	read_texture_single(d, "./textures/Wall_2.bmp", 2, 0);
-	read_texture_single(d, "./textures/Wall_3.bmp", 3, 0);
-	read_texture_single(d, "./textures/Wall_4.bmp", 4, 0);
-	read_texture_single(d, "./textures/rem1.png", 5, 0);
-	read_texture_single(d, "./textures/fire.jpg", 6, 0);
+	read_texture_single(d, "./textures/Wall_1.bmp", 0, 0);
+	read_texture_single(d, "./textures/Wall_2.bmp", 1, 0);
+	read_texture_single(d, "./textures/Wall_3.bmp", 2, 0);
+	read_texture_single(d, "./textures/Wall_4.bmp", 3, 0);
+	read_texture_single(d, "./textures/Wall_5.bmp", 4, 0);
+	read_texture_single(d, "./textures/Wall_6.bmp", 5, 0);
+	read_texture_single(d, "./textures/waifu.png", 6, 0);
+	read_texture_single(d, "./textures/cat.bmp", 7, 0);
+	read_texture_single(d, "./textures/zharko.jpg", 8, 0);
+	read_texture_single(d, "./textures/subj_0.bmp", 9, 0);
+	read_texture_single(d, "./textures/subj_1.bmp", 10, 0);
+	read_texture_single(d, "./textures/subj_2.bmp", 11, 0);
+	read_texture_single(d, "./textures/subj_3.bmp", 12, 0);
 }

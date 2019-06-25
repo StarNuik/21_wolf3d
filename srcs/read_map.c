@@ -6,47 +6,97 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 20:46:55 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/08 18:25:45 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/25 16:56:30 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-t_array		*read_map(char *path)
+void		work_single(t_data *d, char *idk, int max_x)
 {
-	t_array		*res;
-	long long	a[15] = {1, 1, 1, 2, 1, 1, 5, 5, 5, 5, 5, 5, 5, 5, 5};
-	long long	b[15] = {1, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 1};
-	long long	c[15] = {1, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 1};
-	long long	z[15] = {2, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 1};
-	long long	e[15] = {1, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 1};
-	long long	f[15] = {1, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 1};
-	long long	g[15] = {1, 0, 0, 1, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 2};
-	long long	h[15] = {3, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 1};
-	long long	i[15] = {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
-	long long	j[15] = {4, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 1};
-	long long	k[15] = {3, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 1};
-	long long	l[15] = {3, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 1};
-	long long	m[15] = {4, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 1};
-	long long	n[15] = {3, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 1};
-	long long	o[15] = {3, 3, 4, 3, 4, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1};
+	char	test;
 
-	(void)path;
-	res = arr_init();
-	arr_absorb(res, a, 15);
-	arr_absorb(res, b, 15);
-	arr_absorb(res, c, 15);
-	arr_absorb(res, z, 15);
-	arr_absorb(res, e, 15);
-	arr_absorb(res, f, 15);
-	arr_absorb(res, g, 15);
-	arr_absorb(res, h, 15);
-	arr_absorb(res, i, 15);
-	arr_absorb(res, j, 15);
-	arr_absorb(res, k, 15);
-	arr_absorb(res, l, 15);
-	arr_absorb(res, m, 15);
-	arr_absorb(res, n, 15);
-	arr_absorb(res, o, 15);
-	return (res);
+	test = 1;
+	if (*idk == 'p')
+	{
+		if (max_x)
+			d->scene.player.pos = (t_vector3){
+				arr_length(d->map_origin) % max_x + 0.5,
+				arr_length(d->map_origin) / max_x + 0.5,
+				0.0
+			};
+		test = arr_push(d->map_origin, 0);
+	}
+	else if (*idk == 'a')
+		test = arr_push(d->map_origin, 7);
+	else if (*idk == 'c')
+		test = arr_push(d->map_origin, 8);	
+	else if (*idk == 's')
+		test = arr_push(d->map_origin, -1);	
+	else if (*idk >= '1' && *idk <= '6')
+		test = arr_push(d->map_origin, *idk - '0');
+	else if (*idk == '.')
+		test = arr_push(d->map_origin, 0);
+	else
+		map_exit(1);
+	if (!test)
+		exit(5);
+}
+
+void		work_line(t_data *d, char **split)
+{
+	char	**ref;
+	int		qt;
+
+	qt = 0;
+	ref = split;
+	while (*split)
+	{
+		work_single(d, *split, d->scene.map_x ? d->scene.map_x : 0);
+		free(*split);
+		split++;
+		qt++;
+	}
+	free(ref);
+	if (!d->scene.map_x)
+		d->scene.map_x = qt;
+	d->scene.map_y++;
+}
+
+void		work(t_data *d, int fd)
+{
+	char	**split;
+	char	*line;
+	int		ret;
+
+	ret = 1;
+	while (ret)
+	{
+		ret = get_next_line(fd, &line);
+		if (ret == -1)
+			exit(6);
+		if (ret == 0)
+			break ;
+		split = ft_strsplit(line, ' ');
+		if (split == NULL)
+			exit(7);
+		work_line(d, split);
+		free(line);
+	}
+}
+
+void		read_map(t_data *d, char *path)
+{
+	int			fd;
+	
+	d->map_origin = arr_init();
+	if (!d->map_origin)
+		exit(8);
+	fd = open(path, O_RDONLY);
+	if (fd <= 2)
+		map_exit(3);
+	work(d, fd);
+	if (d->scene.map_x < 3 || d->scene.map_y < 3)
+		map_exit(4);
+	close(fd);
 }

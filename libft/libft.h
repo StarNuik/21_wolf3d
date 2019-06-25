@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 17:02:55 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/05/16 16:21:48 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/21 12:32:56 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,20 @@
 # define FT_PI (3.14159265358979323846264338327950288)
 # define RAD2DEG (180.0 / FT_PI)
 # define DEG2RAD (FT_PI / 180.0)
+
+# define V3_ZERO (t_vector3){0.0, 0.0, 0.0}
+# define V3_UP (t_vector3){0.0, 1.0, 0.0}
+# define V3_RIGHT (t_vector3){1.0, 0.0, 0.0}
+# define V3_FORWARD (t_vector3){0.0, 0.0, 1.0}
+# define V3_DOWN (t_vector3){0.0, -1.0, 0.0}
+# define V3_LEFT (t_vector3){-1.0, 0.0, 0.0}
+# define V3_BACKWARD (t_vector3){0.0, 0.0, -1.0}
+# define V3_ONE (t_vector3){1.0, 1.0, 1.0}
+# define V3_NEGONE (t_vector3){-1.0, -1.0, -1.0}
+# define V4_ZERO (t_vector4){0.0, 0.0, 0.0, 0.0}
+# define V4_POINT (t_vector4){0.0, 0.0, 0.0, 1.0}
+# define V4_ONE (t_vector4){1.0, 1.0, 1.0, 0.0}
+# define QU_IDENTITY (t_ernion){1.0, 0.0, 0.0, 0.0}
 
 typedef struct		s_list
 {
@@ -476,7 +490,7 @@ unsigned int		ft_power(int num);
 unsigned long		ft_powerl(long num);
 
 /*
-** Counts square root of (number).
+** Counts square root of (number). Rounds up.
 */
 int					ft_sqrt(unsigned int num);
 int					ft_abs(int input);
@@ -513,33 +527,35 @@ void				ft_swap(int *a, int *b);
 long long			ft_clamp(long long value, long long min, long long max);
 double				ft_clampd(double value, double min, double max);
 void				ft_swapd(double *a, double *b);
-t_vector3			ft_v3forward(void);
-t_vector3			ft_v3one(void);
-t_vector3			ft_v3right(void);
-t_vector3			ft_v3up(void);
-t_vector3			ft_v3zero(void);
-t_vector3			ft_v3add(t_vector3 *a, t_vector3 *b);
-t_vector3			ft_v3subtract(t_vector3 *a, t_vector3 *b);
-t_vector3			ft_v3multnum(t_vector3 *a, double b);
-t_vector3			ft_v3divnum(t_vector3 *a, double b);
-double				ft_v3magnitude(t_vector3 *a);
-t_vector3			ft_v3normalize(t_vector3 *a);
-t_vector3			ft_v3cross(t_vector3 *a, t_vector3 *b);
-t_vector3			ft_v3inverse(t_vector3 *a);
-t_vector4			ft_v4identity(void);
-double				ft_v3dot(t_vector3 *a, t_vector3 *b);
-t_matrix4x4			ft_m4transpose(t_matrix4x4 *a);
-t_vector4			ft_v4zero(void);
+t_vector3			ft_v3add(t_vector3 a, t_vector3 b);
+t_vector3			ft_v3subtract(t_vector3 a, t_vector3 b);
+t_vector3			ft_v3multnum(t_vector3 a, double b);
+t_vector3			ft_v3divnum(t_vector3 a, double b);
+t_vector3			ft_v3normalize(t_vector3 a);
+t_vector3			ft_v3cross(t_vector3 a, t_vector3 b);
+t_vector3			ft_v3inverse(t_vector3 a);
+t_vector3			ft_v4tov3(t_vector4 a);
+t_vector3			ft_m4xv3(t_matrix4x4 matrix, t_vector3 vector);
+t_vector3			ft_v3rotate(t_vector3 vector, t_ernion rotation);
+t_vector3			ft_v3euleur(t_vector3 vector,
+	double degrees_x, double degrees_y, double degrees_z);
+t_vector3			ft_v3abs(t_vector3 a);
+double				ft_v3magnitude(t_vector3 a);
+double				ft_v3dot(t_vector3 a, t_vector3 b);
+t_vector4			ft_m4xv4(t_matrix4x4 matrix, t_vector4 vector);
+t_vector4			ft_v3tov4(t_vector3 a);
+t_vector4			ft_v3tov4point(t_vector3 a);
 t_matrix4x4			ft_m4zero(void);
 t_matrix4x4			ft_m4identity(void);
-t_matrix4x4			ft_m4multiply(t_matrix4x4 *a, t_matrix4x4 *b);
-t_matrix4x4			ft_m4inverse(t_matrix4x4 *in);
-t_matrix4x4			ft_m4multnum(t_matrix4x4 *a, double num);
-t_vector4			ft_m4xv4(t_matrix4x4 *matrix, t_vector4 *vector);
-t_ernion			ft_quidentity(void);
-t_ernion			ft_qumultiply(t_ernion *first, t_ernion *second);
-t_ernion			ft_qurotation(t_vector3 *axis, double *angle);
-t_ernion			ft_queuler(double *angle_x, double *angle_y,
-	double *angle_z);
-t_ernion			ft_quinverse(t_ernion *a);
+t_matrix4x4			ft_m4transpose(t_matrix4x4 a);
+t_matrix4x4			ft_m4multiply(t_matrix4x4 a, t_matrix4x4 b);
+t_matrix4x4			ft_m4inverse(t_matrix4x4 in);
+t_matrix4x4			ft_m4multnum(t_matrix4x4 a, double num);
+t_matrix4x4			ft_qurotmatrix(t_ernion rot);
+t_ernion			ft_qumultiply(t_ernion first, t_ernion second);
+t_ernion			ft_qurotation(t_vector3 axis, double angle);
+t_ernion			ft_queuler(double angle_x, double angle_y,
+	double angle_z);
+t_ernion			ft_quinverse(t_ernion a);
+char				*ft_readfile(char *path);
 #endif

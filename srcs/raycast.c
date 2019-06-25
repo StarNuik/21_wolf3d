@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 07:31:09 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/07 09:43:40 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/25 16:50:19 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ float		raycast_basic(t_data *d, t_vector3 pos, float angle)
 	{
 		cur.x += si;
 		cur.y += co;
-		if (arr_get(d->scene.map_loaded, (int)cur.x + (int)cur.y * DEBUG_MAP_SIZE) != 0)
+		if (arr_get(d->scene.map_loaded, (int)cur.x + (int)cur.y * d->scene.map_x) != 0)
 			return (qt);
 		qt += RAYCAST_RESOLUTION;
 	}
@@ -51,9 +51,9 @@ t_raycast	raycast(t_data *d, t_vector3 pos, float angle)
 	{
 		res.hit.x += si;
 		res.hit.y += co;
-		if (arr_get(d->scene.map_loaded, (int)res.hit.x + (int)res.hit.y * DEBUG_MAP_SIZE) != 0)
+		if (arr_get(d->scene.map_loaded, (int)res.hit.x + (int)res.hit.y * d->scene.map_x) != 0)
 		{
-			res.type = arr_get(d->scene.map_loaded, (int)res.hit.x + (int)res.hit.y * DEBUG_MAP_SIZE);
+			res.type = arr_get(d->scene.map_loaded, (int)res.hit.x + (int)res.hit.y * d->scene.map_x);
 			return (res);
 		}
 		res.dist += RAYCAST_RESOLUTION;
