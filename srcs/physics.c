@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 02:50:29 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/25 17:20:56 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/27 08:50:06 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void		move_player(t_data *d, char dir)
 	dirv = (t_vector3){0, 1, 0};
 	dirv = rotate_vector(dirv, d->scene.player.lookAngle);
 	dirv = ft_v3multnum(dirv, CONTROL_MOVEMENT_DELTA * (double)dir);
+	if (d->ctrl.speedhack)
+		dirv = ft_v3multnum(dirv, CONTROL_SPEEDHACK);
 	angle = (dir > 0 ? d->scene.player.lookAngle : d->scene.player.lookAngle - 180) - 1;
 	qt = -1;
 	while (++qt < 3)

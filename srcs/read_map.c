@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 20:46:55 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/25 16:56:30 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/27 10:50:28 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,22 @@ void		work_single(t_data *d, char *idk, int max_x)
 {
 	char	test;
 
-	test = 1;
+	test = -1;
 	if (*idk == 'p')
 	{
 		if (max_x)
 			d->scene.player.pos = (t_vector3){
 				arr_length(d->map_origin) % max_x + 0.5,
-				arr_length(d->map_origin) / max_x + 0.5,
-				0.0
-			};
+				arr_length(d->map_origin) / max_x + 0.5, 0.0};
 		test = arr_push(d->map_origin, 0);
 	}
-	else if (*idk == 'a')
-		test = arr_push(d->map_origin, 7);
-	else if (*idk == 'c')
-		test = arr_push(d->map_origin, 8);	
-	else if (*idk == 's')
-		test = arr_push(d->map_origin, -1);	
-	else if (*idk >= '1' && *idk <= '6')
-		test = arr_push(d->map_origin, *idk - '0');
-	else if (*idk == '.')
-		test = arr_push(d->map_origin, 0);
-	else
-		map_exit(1);
-	if (!test)
-		exit(5);
+	(*idk == 'a' ? test = arr_push(d->map_origin, 7) : 0);
+	(*idk == 'c' ? test = arr_push(d->map_origin, 8) : 0);
+	(*idk == 's' ? test = arr_push(d->map_origin, -1) : 0);
+	(*idk == '.' ? test = arr_push(d->map_origin, 0) : 0);
+	(*idk >= '1' && *idk <= '6' ? test = arr_push(d->map_origin, *idk - '0') : 0);
+	(test == -1 ? map_exit(1) : 0);
+	(test == 0 ? exit(5) : 0);
 }
 
 void		work_line(t_data *d, char **split)
@@ -60,6 +51,8 @@ void		work_line(t_data *d, char **split)
 	free(ref);
 	if (!d->scene.map_x)
 		d->scene.map_x = qt;
+	else if (d->scene.map_x != qt)
+		map_exit(2);
 	d->scene.map_y++;
 }
 

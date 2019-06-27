@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 15:04:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/25 17:02:52 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/27 10:53:51 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@
 # define CONTROL_ROTATION_DELTA 0.1
 # define CONTROL_MOVEMENT_DELTA 0.18
 # define CONTROL_COLLISION_DIST 0.3
+# define CONTROL_SPEEDHACK 5
 
 # define TEXTURE_POOL_SIZE 16
 # define SOUND_POOL_SIZE 4
+# define OBJECT_POOL_SIZE 4
 
 typedef struct			s_color
 {
@@ -57,6 +59,7 @@ typedef struct			s_controls
 	char				right;
 	char				zharko;
 	char				noclip;
+	char				speedhack;
 }						t_rols;
 
 typedef struct			s_player
@@ -64,6 +67,14 @@ typedef struct			s_player
 	t_vector3			pos;
 	float				lookAngle;
 }						t_player;
+
+typedef struct			s_object
+{
+	t_vector3			pos;
+	int					tex_id;
+	char				pickup;
+	int					score;
+}						t_object;
 
 typedef struct			s_texture
 {
@@ -91,6 +102,7 @@ typedef struct			s_scene
 	int					map_x;
 	int					map_y;
 	int					track_playing;
+	t_object			object_pool[OBJECT_POOL_SIZE];
 }						t_scene;
 
 typedef struct			s_sdl
@@ -98,6 +110,8 @@ typedef struct			s_sdl
 	SDL_Window			*win;
 	SDL_Renderer		*ren;
 	SDL_Texture			*tex_out;
+	SDL_Texture			*tex_gui;
+	SDL_Texture			*tex_sprite;
 	SDL_Event			event;
 }						t_sdl;
 

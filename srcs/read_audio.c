@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 13:24:43 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/08 18:39:56 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/27 09:45:58 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		read_audio_file(t_data *d, char *path, int num)
 
 void	read_audio(t_data *d)
 {
-	read_audio_file(d, "./sounds/song1.wav", 0);
+	read_audio_file(d, "./sounds/song2.wav", 0);
 	read_audio_file(d, "./sounds/walk_g.wav", 1);
 	read_audio_file(d, "./sounds/hit.wav", 2);
 	// SDL_PauseAudio(0);

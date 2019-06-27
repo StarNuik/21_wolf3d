@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 02:35:53 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/25 17:20:55 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/27 09:03:46 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,27 +32,17 @@ void		key_press_hook(t_data *d)
 	SDL_Keycode		key;
 
 	key = d->sdl.event.key.keysym.sym;
-	if (key == SDLK_ESCAPE)
-		try_exit(d);
-	if (key == SDLK_w)
-		d->ctrl.forward = 1;
-	if (key == SDLK_s)
-		d->ctrl.backward = 1;
-	if (key == SDLK_a)
-		d->ctrl.left = 1;
-	if (key == SDLK_d)
-		d->ctrl.right = 1;
-	if (key == SDLK_2)
-	{
-		d->ctrl.zharko = 1;
-		play_audio(d, 2);
-	}
-	if (key == SDLK_q)
-		stop_audio(d, 0);
-	if (key == SDLK_e)
-		play_audio(d, 0);
-	if (key == SDLK_1)
-		d->ctrl.noclip = !d->ctrl.noclip;
+	(key == SDLK_ESCAPE ? try_exit(d) : 0);
+	(key == SDLK_w ? d->ctrl.forward = 1 : 0);
+	(key == SDLK_s ? d->ctrl.backward = 1 : 0);
+	(key == SDLK_a ? d->ctrl.left = 1 : 0);
+	(key == SDLK_d ? d->ctrl.right = 1 : 0);
+	(key == SDLK_q ? stop_audio(d, 0) : 0);
+	(key == SDLK_e ? play_audio(d, 0) : 0);
+	(key == SDLK_1 ? d->ctrl.noclip = !d->ctrl.noclip : 0);
+	(key == SDLK_2 ? d->ctrl.speedhack = !d->ctrl.speedhack : 0);
+	(key == SDLK_3 ? d->ctrl.zharko = 1 : 0);
+	(key == SDLK_3 ? play_audio(d, 2) : 0);
 }
 
 void		walk_sound_hack(t_data *d)

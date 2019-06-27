@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 19:52:54 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/25 16:01:27 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/27 10:30:34 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void		clean_sdl(t_data *d)
 	SDL_FreeWAV(d->sound_pool[0].buffer);
 	SDL_FreeWAV(d->sound_pool[1].buffer);
 	SDL_FreeWAV(d->sound_pool[2].buffer);
-	SDL_DestroyTexture(d->sdl.tex_out);
 	stbi_image_free(d->tex_pool[0].data);
 	stbi_image_free(d->tex_pool[1].data);
 	stbi_image_free(d->tex_pool[2].data);
@@ -32,6 +31,9 @@ void		clean_sdl(t_data *d)
 	stbi_image_free(d->tex_pool[10].data);
 	stbi_image_free(d->tex_pool[11].data);
 	stbi_image_free(d->tex_pool[12].data);
+	SDL_DestroyTexture(d->sdl.tex_out);
+	SDL_DestroyTexture(d->sdl.tex_gui);
+	SDL_DestroyTexture(d->sdl.tex_sprite);
 	SDL_DestroyRenderer(d->sdl.ren);
 	SDL_DestroyWindow(d->sdl.win);
 	SDL_Log("Isekai commitment successful!");
