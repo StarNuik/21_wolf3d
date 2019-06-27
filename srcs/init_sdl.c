@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 19:00:48 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/27 10:30:17 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/27 13:16:21 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,7 @@ void	init_sdl(t_data *d)
 	d->sdl.tex_out = SDL_CreateTexture(d->sdl.ren, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_TARGET, TEX_WIDTH, TEX_HEIGHT);
 	d->sdl.tex_gui = SDL_CreateTexture(d->sdl.ren, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_TARGET, TEX_WIDTH, TEX_HEIGHT);
 	d->sdl.tex_sprite = SDL_CreateTexture(d->sdl.ren, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_TARGET, TEX_WIDTH, TEX_HEIGHT);
+	SDL_SetTextureBlendMode(d->sdl.tex_out, SDL_BLENDMODE_BLEND);
+	SDL_SetTextureBlendMode(d->sdl.tex_gui, SDL_BLENDMODE_BLEND);
+	SDL_SetTextureBlendMode(d->sdl.tex_sprite, SDL_BLENDMODE_BLEND);
 }

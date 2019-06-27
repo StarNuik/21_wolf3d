@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 15:04:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/27 10:53:51 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/27 14:27:28 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@
 
 # define TEXTURE_POOL_SIZE 16
 # define SOUND_POOL_SIZE 4
-# define OBJECT_POOL_SIZE 4
+# define OBJECT_POOL_SIZE 3
+
+# define OBJ_1 (t_object){V3_ZERO, 7, 0, 1, 0}
 
 typedef struct			s_color
 {
@@ -73,6 +75,7 @@ typedef struct			s_object
 	t_vector3			pos;
 	int					tex_id;
 	char				pickup;
+	char				walkthrough;
 	int					score;
 }						t_object;
 
@@ -123,6 +126,7 @@ typedef struct			s_data
 	t_rols				ctrl;
 	t_exture			tex_pool[TEXTURE_POOL_SIZE];
 	t_sound				sound_pool[SOUND_POOL_SIZE];
+	unsigned int		ticks;
 }						t_data;
 
 void					try_exit(t_data *d);
@@ -139,6 +143,7 @@ void					event_router(t_data *d);
 float					raycast_basic(t_data *d, t_vector3 pos, float angle);
 t_raycast				raycast(t_data *d, t_vector3 pos, float angle);
 void					draw_wall(t_data *d, int x, int height, t_raycast ray);
+void					draw_sprite(t_data *d, int x, int size, int tex_id);
 void					play_audio(t_data *d, int num);
 void					stop_audio(t_data *d, int num);
 void					audio_call(void *userdata, unsigned char *stream, int len);

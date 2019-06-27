@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 01:32:05 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/27 09:09:08 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/27 13:15:43 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ void		draw_wall(t_data *d, int x, int height, t_raycast ray)
 	while (++qt < TEX_HEIGHT)
 	{
 		if (qt < y)
-			SDL_SetRenderDrawColor(d->sdl.ren, 0, 0, 80, 0x00);
+			SDL_SetRenderDrawColor(d->sdl.ren, 0, 0, 80, 0xff);
 		else if (qt > y + height)
-			SDL_SetRenderDrawColor(d->sdl.ren, 30, 30, 30, 0x00);
+			SDL_SetRenderDrawColor(d->sdl.ren, 30, 30, 30, 0xff);
 		else
 		{
 			id = tex_x + (int)((qt - y) / (float)height * tex.height) * tex.width;
 			id = ft_clamp(id, 0, tex.width * tex.height - 1);
-			SDL_SetRenderDrawColor(d->sdl.ren, tex.data[id * 3], tex.data[id * 3 + 1], tex.data[id * 3 + 2], 0x00);
+			SDL_SetRenderDrawColor(d->sdl.ren, tex.data[id * 3], tex.data[id * 3 + 1], tex.data[id * 3 + 2], 0xff);
 		}
 		SDL_RenderDrawPoint(d->sdl.ren, x, qt);
 	}

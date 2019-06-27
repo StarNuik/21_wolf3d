@@ -6,11 +6,32 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 20:46:55 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/27 10:50:28 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/27 12:33:20 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
+
+int			parse_entity(t_data *d, char *idk)
+{
+	//? Maybe change this to dynamic arrays?
+	// static int	e;
+	static int	o;
+	int			x;
+	int			y;
+
+	x = (d->scene.map_x ? arr_length(d->map_origin) % d->scene.map_x : arr_length(d->map_origin));
+	y = (d->scene.map_x ? arr_length(d->map_origin) / d->scene.map_x : 0);
+	if (*idk == 'e')
+		(void)(1);
+	else if (*idk == 'o')
+	{
+		d->scene.object_pool[o] = OBJ_1;
+		d->scene.object_pool[o].pos = (t_vector3){x + 0.5, y + 0.5, 0.0};
+		o++;
+	}
+	return (arr_push(d->map_origin, 0));
+}
 
 void		work_single(t_data *d, char *idk, int max_x)
 {
@@ -28,6 +49,7 @@ void		work_single(t_data *d, char *idk, int max_x)
 	(*idk == 'a' ? test = arr_push(d->map_origin, 7) : 0);
 	(*idk == 'c' ? test = arr_push(d->map_origin, 8) : 0);
 	(*idk == 's' ? test = arr_push(d->map_origin, -1) : 0);
+	(*idk == 'e' || *idk == 'o' ? test = parse_entity(d, idk) : 0);
 	(*idk == '.' ? test = arr_push(d->map_origin, 0) : 0);
 	(*idk >= '1' && *idk <= '6' ? test = arr_push(d->map_origin, *idk - '0') : 0);
 	(test == -1 ? map_exit(1) : 0);

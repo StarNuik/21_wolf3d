@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
+/*   draw_sprite.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/06 02:46:32 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/27 13:20:02 by sbosmer          ###   ########.fr       */
+/*   Created: 2019/06/27 13:59:06 by sbosmer           #+#    #+#             */
+/*   Updated: 2019/06/27 14:34:56 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-void		general_pipe(t_data *d)
+void		draw_sprite(t_data *d, int in_x, int size, int tex_id)
 {
-	while (1)
+	t_exture	tex;
+	int			x;
+	int			y;
+
+	tex = d->tex_pool[tex_id];
+
+	SDL_SetRenderDrawColor(d->sdl.ren, 200, 200, size, 0xff);
+	x = in_x - size / 2 - 1;
+	while (++x < in_x + size / 2)
 	{
-		event_router(d);
-		physics_pipe(d);
-		render_pipe(d);
-		d->ticks++;
+		y = TEX_HEIGHT / 2 - size / 2 - 1;
+		while (++y < TEX_HEIGHT / 2 + size / 2)
+		{
+			SDL_RenderDrawPoint(d->sdl.ren, x, y);
+		}
 	}
-	try_exit(d);
+	(void)tex_id;
 }
