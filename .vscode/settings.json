@@ -4,6 +4,7 @@
 		"libft.h": "c",
 		"sdl.h": "c",
 		"stdio.h": "c",
-		"stb_image.h": "c"
+		"stb_image.h": "c",
+		"profiler.h": "c"
 	}
 }
