@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 02:50:29 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/27 08:50:06 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/28 22:31:18 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,25 @@ void		move_player(t_data *d, char dir)
 		d->scene.player.pos = ft_v3add(d->scene.player.pos, dirv);
 }
 
+void		rotate_player(t_data *d, char dir)
+{
+	float	angle;
+
+	angle = d->scene.player.lookAngle;
+	angle += CONTROL_ROTATION_DELTA * dir;
+	if (angle > FT_PI)
+		angle -= 2 * FT_PI;
+	if (angle < -FT_PI)
+		angle += 2 * FT_PI;
+	d->scene.player.lookAngle = angle;
+}
+
 void		physics_pipe(t_data *d)
 {
 	if (d->ctrl.left)
-		d->scene.player.lookAngle += CONTROL_ROTATION_DELTA;
+		rotate_player(d, 1);
 	if (d->ctrl.right)
-		d->scene.player.lookAngle -= CONTROL_ROTATION_DELTA;
+		rotate_player(d, -1);
 	if (d->ctrl.forward)
 		move_player(d, 1);
 	if (d->ctrl.backward)

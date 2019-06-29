@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 15:04:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/27 14:27:28 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/29 19:59:48 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define TEX_HEIGHT 400
 // # define TEX_WIDTH 640
 // # define TEX_HEIGHT 480
+# define TARGET_FPS 24
 
 # define RAYCAST_MAX_DISTANCE 70
 # define RAYCAST_RESOLUTION 0.01
@@ -35,7 +36,6 @@
 
 # define TEXTURE_POOL_SIZE 16
 # define SOUND_POOL_SIZE 4
-# define OBJECT_POOL_SIZE 3
 
 # define OBJ_1 (t_object){V3_ZERO, 7, 0, 1, 0}
 
@@ -105,16 +105,18 @@ typedef struct			s_scene
 	int					map_x;
 	int					map_y;
 	int					track_playing;
-	t_object			object_pool[OBJECT_POOL_SIZE];
+	t_array				*object_arr;
 }						t_scene;
 
 typedef struct			s_sdl
 {	
 	SDL_Window			*win;
 	SDL_Renderer		*ren;
-	SDL_Texture			*tex_out;
-	SDL_Texture			*tex_gui;
+	SDL_Texture			*tex_bg;
+	SDL_Texture			*tex_wall;
 	SDL_Texture			*tex_sprite;
+	SDL_Texture			*tex_gui_bg;
+	SDL_Texture			*tex_gui;
 	SDL_Event			event;
 }						t_sdl;
 
@@ -142,8 +144,10 @@ void					render_pipe(t_data *d);
 void					event_router(t_data *d);
 float					raycast_basic(t_data *d, t_vector3 pos, float angle);
 t_raycast				raycast(t_data *d, t_vector3 pos, float angle);
-void					draw_wall(t_data *d, int x, int height, t_raycast ray);
+void					draw_wall(t_data *d, const int x, const int height, t_raycast ray);
 void					draw_sprite(t_data *d, int x, int size, int tex_id);
+void					draw_bg(t_data *d);
+void					draw_gui_bg(t_data *d);
 void					play_audio(t_data *d, int num);
 void					stop_audio(t_data *d, int num);
 void					audio_call(void *userdata, unsigned char *stream, int len);

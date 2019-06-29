@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 19:52:54 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/27 10:30:34 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/29 17:56:27 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ void		clean_sdl(t_data *d)
 	stbi_image_free(d->tex_pool[10].data);
 	stbi_image_free(d->tex_pool[11].data);
 	stbi_image_free(d->tex_pool[12].data);
-	SDL_DestroyTexture(d->sdl.tex_out);
-	SDL_DestroyTexture(d->sdl.tex_gui);
+	SDL_DestroyTexture(d->sdl.tex_bg);
+	SDL_DestroyTexture(d->sdl.tex_wall);
 	SDL_DestroyTexture(d->sdl.tex_sprite);
+	SDL_DestroyTexture(d->sdl.tex_gui_bg);
+	SDL_DestroyTexture(d->sdl.tex_gui);
 	SDL_DestroyRenderer(d->sdl.ren);
 	SDL_DestroyWindow(d->sdl.win);
 	SDL_Log("Isekai commitment successful!");

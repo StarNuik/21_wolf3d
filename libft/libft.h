@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 17:02:55 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/21 12:32:56 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/28 17:01:24 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -542,6 +542,7 @@ t_vector3			ft_v3euleur(t_vector3 vector,
 t_vector3			ft_v3abs(t_vector3 a);
 double				ft_v3magnitude(t_vector3 a);
 double				ft_v3dot(t_vector3 a, t_vector3 b);
+double				ft_v3dot2(t_vector3 a);
 t_vector4			ft_m4xv4(t_matrix4x4 matrix, t_vector4 vector);
 t_vector4			ft_v3tov4(t_vector3 a);
 t_vector4			ft_v3tov4point(t_vector3 a);

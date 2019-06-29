@@ -6,19 +6,18 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 20:46:55 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/27 12:33:20 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/06/29 16:54:29 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-int			parse_entity(t_data *d, char *idk)
+char		parse_entity(t_data *d, char *idk)
 {
 	//? Maybe change this to dynamic arrays?
-	// static int	e;
-	static int	o;
 	int			x;
 	int			y;
+	t_object	*cache;
 
 	x = (d->scene.map_x ? arr_length(d->map_origin) % d->scene.map_x : arr_length(d->map_origin));
 	y = (d->scene.map_x ? arr_length(d->map_origin) / d->scene.map_x : 0);
@@ -26,9 +25,11 @@ int			parse_entity(t_data *d, char *idk)
 		(void)(1);
 	else if (*idk == 'o')
 	{
-		d->scene.object_pool[o] = OBJ_1;
-		d->scene.object_pool[o].pos = (t_vector3){x + 0.5, y + 0.5, 0.0};
-		o++;
+		cache = ft_memalloc(sizeof(t_object));
+		*cache = OBJ_1;
+		cache->pos = (t_vector3){x + 0.5, y + 0.5, 0.0};
+		if (!arr_push(d->scene.object_arr, (long long)cache))
+			return (0);
 	}
 	return (arr_push(d->map_origin, 0));
 }
@@ -105,6 +106,7 @@ void		read_map(t_data *d, char *path)
 	int			fd;
 	
 	d->map_origin = arr_init();
+	d->scene.object_arr = arr_init();
 	if (!d->map_origin)
 		exit(8);
 	fd = open(path, O_RDONLY);
