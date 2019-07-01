@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 21:02:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/01 19:13:00 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/01 22:12:14 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,35 @@ void		render_walls(t_data *d)
 	// ft_putmem
 }
 
+void		sort_sprites(t_data *d)
+{
+	int			qt;
+	int			ct;
+	int			key;
+	const int	len = arr_length(d->scene.object_arr);
+	t_object	*obj;
+
+	qt = -1;
+	while (++qt < len)
+	{
+		obj = ((t_object*)arr_get(d->scene.object_arr, qt));
+		obj->dist_to_player = ft_v3magnitude(ft_v3subtract(d->scene.player.pos, obj->pos));
+	}
+	qt = 0;
+	while (++qt < len)
+	{
+		key = arr_get(d->rend.object_order, qt);
+		obj = (t_object*)arr_get(d->scene.object_arr, key);
+		ct = qt - 1;
+		while (ct >= 0 && ((t_object*)arr_get(d->scene.object_arr, ct))->dist_to_player > obj->dist_to_player)
+		{
+			d->scene.object_arr->field[ct + 1] = arr_get(d->scene.object_arr, ct);
+			ct--;
+		}
+		d->scene.object_arr->field[ct + 1] = key;
+	}
+}
+
 void		render_sprites(t_data *d)
 {
 	size_t		qt;
@@ -42,9 +71,12 @@ void		render_sprites(t_data *d)
 	t_vector3	sub;
 
 	SDL_SetRenderTarget(d->sdl.ren, d->sdl.tex_sprite);
+	// sort_sprites(d);
+	// qt = arr_length(d->scene.object_arr);
 	qt = -1;
 	while (++qt < arr_length(d->scene.object_arr))
 	{
+		// object = *(t_object*)arr_get(d->scene.object_arr, arr_get(d->rend.object_order, qt));
 		object = *(t_object*)arr_get(d->scene.object_arr, qt);
 		sub = ft_v3subtract(object.pos, d->scene.player.pos);
 		angle = atan2(sub.y, sub.x) + FT_PI / 2.0 - FT_PI;
@@ -55,8 +87,8 @@ void		render_sprites(t_data *d)
 			angle += 2 * FT_PI;
 		if (angle > FT_PI / 3.0 || angle < -FT_PI / 3.0)
 			continue;
-		size = (float)TEX_HEIGHT / fmax(ft_v3magnitude(sub), 1);
 		// size = size * cos((float)FIELD_OF_VIEW / (float)TEX_WIDTH * ((angle + FT_PI / 4.0) / (FT_PI / 2.0)) * (float)TEX_WIDTH - FIELD_OF_VIEW / 2);
+		size = (float)TEX_HEIGHT / fmax(ft_v3magnitude(sub), 1);
 		draw_sprite(d, ((angle + FT_PI / 4.0) / (FT_PI / 2.0)) * (float)TEX_WIDTH, size, object);
 	}
 	SDL_SetRenderTarget(d->sdl.ren, NULL);

@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 20:46:55 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/29 16:54:29 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/01 21:16:18 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 char		parse_entity(t_data *d, char *idk)
 {
-	//? Maybe change this to dynamic arrays?
 	int			x;
 	int			y;
 	t_object	*cache;
@@ -29,6 +28,8 @@ char		parse_entity(t_data *d, char *idk)
 		*cache = OBJ_1;
 		cache->pos = (t_vector3){x + 0.5, y + 0.5, 0.0};
 		if (!arr_push(d->scene.object_arr, (long long)cache))
+			return (0);
+		if (!arr_push(d->rend.object_order, arr_length(d->rend.object_order)))
 			return (0);
 	}
 	return (arr_push(d->map_origin, 0));
@@ -107,6 +108,7 @@ void		read_map(t_data *d, char *path)
 	
 	d->map_origin = arr_init();
 	d->scene.object_arr = arr_init();
+	d->rend.object_order = arr_init();
 	if (!d->map_origin)
 		exit(8);
 	fd = open(path, O_RDONLY);

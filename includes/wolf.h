@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 15:04:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/01 19:21:47 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/01 22:01:28 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define TEXTURE_POOL_SIZE 16
 # define SOUND_POOL_SIZE 4
 
-# define OBJ_1 (t_object){V3_ZERO, 7, 0, 1, 0}
+# define OBJ_1 (t_object){V3_ZERO, 7, 0, 1, 0, 0.0}
 
 typedef struct			s_color
 {
@@ -81,6 +81,7 @@ typedef struct			s_object
 	char				pickup;
 	char				walkthrough;
 	int					score;
+	float				dist_to_player;
 }						t_object;
 
 typedef struct			s_texture
@@ -134,6 +135,7 @@ typedef struct			s_frame_control
 typedef struct			s_renderer
 {
 	t_raycast			rays[TEX_WIDTH];
+	t_array				*object_order;
 }						t_rend;
 
 typedef struct			s_data
