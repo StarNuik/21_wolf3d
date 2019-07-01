@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 15:04:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/29 21:35:08 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/01 19:21:47 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@
 # define TEX_HEIGHT 400
 // # define TEX_WIDTH 640
 // # define TEX_HEIGHT 480
-# define TARGET_FPS 23.99
+# define TARGET_FPS 24
 # define TARGET_MS (1000 / (int)TARGET_FPS)
 
 # define RAYCAST_MAX_DISTANCE 70
 # define RAYCAST_RESOLUTION 0.01
 # define FIELD_OF_VIEW (M_PI / 2)
 
-# define CONTROL_ROTATION_DELTA 0.1
+# define CONTROL_ROTATION_DELTA 0.001
 # define CONTROL_MOVEMENT_DELTA 0.18
 # define CONTROL_COLLISION_DIST 0.3
 # define CONTROL_SPEEDHACK 5
@@ -57,6 +57,8 @@ typedef struct			s_castret
 
 typedef struct			s_controls
 {
+	int					mouse_rel_x;
+	int					mouse_rel_y;
 	char				forward;
 	char				backward;
 	char				left;
@@ -120,6 +122,7 @@ typedef struct			s_sdl
 	SDL_Texture			*tex_gui_bg;
 	SDL_Texture			*tex_gui;
 	SDL_Event			event;
+	char				mouse_move_processed;
 }						t_sdl;
 
 typedef struct			s_frame_control
@@ -127,6 +130,11 @@ typedef struct			s_frame_control
 	unsigned int		last_message;
 	unsigned int		frame_start;
 }						t_frames;
+
+typedef struct			s_renderer
+{
+	t_raycast			rays[TEX_WIDTH];
+}						t_rend;
 
 typedef struct			s_data
 {	
@@ -136,8 +144,9 @@ typedef struct			s_data
 	t_rols				ctrl;
 	t_exture			tex_pool[TEXTURE_POOL_SIZE];
 	t_sound				sound_pool[SOUND_POOL_SIZE];
-	unsigned int		ticks;
 	t_frames			pr;
+	t_rend				rend;
+	unsigned int		ticks;
 }						t_data;
 
 void					try_exit(t_data *d);
@@ -150,6 +159,7 @@ void					read_audio(t_data *d);
 void					read_textures(t_data *d);
 
 void					general_pipe(t_data *d);
+void					ray_viewport(t_data *d);
 void					physics_pipe(t_data *d);
 void					render_pipe(t_data *d);
 void					event_router(t_data *d);
@@ -157,8 +167,10 @@ void					event_router(t_data *d);
 float					raycast_basic(t_data *d, t_vector3 pos, float angle);
 t_raycast				raycast(t_data *d, t_vector3 pos, float angle);
 
+void					move_player(t_data *d, t_vector3 dirv);
+
 void					draw_wall(t_data *d, const int x, const int height, t_raycast ray);
-void					draw_sprite(t_data *d, int x, int size, int tex_id);
+void					draw_sprite(t_data *d, const int x, const int size, const t_object obj);
 void					draw_bg(t_data *d);
 void					draw_gui_bg(t_data *d);
 void					wait_for_next_frame(t_data *d);

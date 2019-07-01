@@ -6,52 +6,18 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 02:50:29 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/28 22:31:18 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/01 15:44:22 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-t_vector3	rotate_vector(t_vector3 in, float angle)
-{
-	float si;
-	float co;
-
-	angle = -angle;
-	si = sin(angle);
-	co = cos(angle);
-	in = (t_vector3){co * in.x - si * in.y, si * in.x + co * in.y, 0.0};
-	return (in);
-}
-
-void		move_player(t_data *d, char dir)
-{
-	t_vector3	dirv;
-	t_raycast	hit[3];
-	float		angle;
-	int			qt;
-	float		dist;
-
-	dirv = (t_vector3){0, 1, 0};
-	dirv = rotate_vector(dirv, d->scene.player.lookAngle);
-	dirv = ft_v3multnum(dirv, CONTROL_MOVEMENT_DELTA * (double)dir);
-	if (d->ctrl.speedhack)
-		dirv = ft_v3multnum(dirv, CONTROL_SPEEDHACK);
-	angle = (dir > 0 ? d->scene.player.lookAngle : d->scene.player.lookAngle - 180) - 1;
-	qt = -1;
-	while (++qt < 3)
-		hit[qt] = raycast(d, d->scene.player.pos, angle++);
-	dist = fmin(hit[0].dist, fmin(hit[1].dist, hit[2].dist));
-	if (d->ctrl.noclip || dist > CONTROL_COLLISION_DIST)
-		d->scene.player.pos = ft_v3add(d->scene.player.pos, dirv);
-}
-
-void		rotate_player(t_data *d, char dir)
+void		rotate_player(t_data *d)
 {
 	float	angle;
 
 	angle = d->scene.player.lookAngle;
-	angle += CONTROL_ROTATION_DELTA * dir;
+	angle += CONTROL_ROTATION_DELTA * -d->ctrl.mouse_rel_x;
 	if (angle > FT_PI)
 		angle -= 2 * FT_PI;
 	if (angle < -FT_PI)
@@ -61,12 +27,19 @@ void		rotate_player(t_data *d, char dir)
 
 void		physics_pipe(t_data *d)
 {
-	if (d->ctrl.left)
-		rotate_player(d, 1);
-	if (d->ctrl.right)
-		rotate_player(d, -1);
+	t_vector3	move_dir;
+
+	if (d->ctrl.mouse_rel_x)
+		rotate_player(d);
+	move_dir = V3_ZERO;
 	if (d->ctrl.forward)
-		move_player(d, 1);
+		move_dir.y = 1.0;
 	if (d->ctrl.backward)
-		move_player(d, -1);
+		move_dir.y = -1.0;
+	if (d->ctrl.right)
+		move_dir.x = -1.0;
+	if (d->ctrl.left)
+		move_dir.x = 1.0;
+	if (d->ctrl.forward || d->ctrl.backward || d->ctrl.left || d->ctrl.right)
+		move_player(d, ft_v3normalize(move_dir));
 }

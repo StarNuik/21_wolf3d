@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 21:02:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/29 21:39:24 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/01 19:13:00 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,23 @@
 
 void		render_walls(t_data *d)
 {
-	int			x;
-	float		angle;
-	float		angleDelta;
-	float		height;
-	t_raycast	ray;
+	int				x;
+	float			height;
+	t_raycast		ray;
+	const float		angleDelta = (float)FIELD_OF_VIEW / (float)TEX_WIDTH;
 
 	SDL_SetRenderTarget(d->sdl.ren, d->sdl.tex_wall);
 	x = TEX_WIDTH;
-	angle = d->scene.player.lookAngle - FIELD_OF_VIEW / 2;
-	angleDelta = (float)FIELD_OF_VIEW / (float)TEX_WIDTH;
 	while (--x >= 0)
 	{
-		ray = raycast(d, d->scene.player.pos, angle);
-		height = ray.dist * cos(angle - d->scene.player.lookAngle);
+		ray = d->rend.rays[x];
+		height = ray.dist * cos(angleDelta * x - FIELD_OF_VIEW / 2);
 		height = (float)TEX_HEIGHT / height;
 		draw_wall(d, x, height, ray);
-		angle += angleDelta;
 		// x++;
 	}
 	SDL_SetRenderTarget(d->sdl.ren, NULL);
+	// ft_putmem
 }
 
 void		render_sprites(t_data *d)
@@ -59,7 +56,8 @@ void		render_sprites(t_data *d)
 		if (angle > FT_PI / 3.0 || angle < -FT_PI / 3.0)
 			continue;
 		size = (float)TEX_HEIGHT / fmax(ft_v3magnitude(sub), 1);
-		draw_sprite(d, ((angle + FT_PI / 4.0) / (FT_PI / 2.0)) * (float)TEX_WIDTH, size, object.tex_id);
+		// size = size * cos((float)FIELD_OF_VIEW / (float)TEX_WIDTH * ((angle + FT_PI / 4.0) / (FT_PI / 2.0)) * (float)TEX_WIDTH - FIELD_OF_VIEW / 2);
+		draw_sprite(d, ((angle + FT_PI / 4.0) / (FT_PI / 2.0)) * (float)TEX_WIDTH, size, object);
 	}
 	SDL_SetRenderTarget(d->sdl.ren, NULL);
 }
@@ -80,15 +78,18 @@ void		render_pipe(t_data *d)
 	SDL_SetRenderDrawColor(d->sdl.ren, 0x00, 0x00, 0x00, 0x00);
 	SDL_SetRenderTarget(d->sdl.ren, d->sdl.tex_gui);
 	SDL_RenderClear(d->sdl.ren);
-	PR_START(1)
+	PR_START(4);
+	ray_viewport(d);
+	PR_END(4);
+	PR_START(1);
 	render_walls(d);
-	PR_END(1)
-	PR_START(2)
+	PR_END(1);
+	PR_START(2);
 	render_sprites(d);
-	PR_END(2)
-	PR_START(3)
+	PR_END(2);
+	PR_START(3);
 	render_gui(d);
-	PR_END(3)
+	PR_END(3);
 	SDL_SetRenderTarget(d->sdl.ren, NULL);
 	SDL_RenderCopy(d->sdl.ren, d->sdl.tex_bg, NULL, NULL);
 	SDL_RenderCopy(d->sdl.ren, d->sdl.tex_wall, NULL, NULL);

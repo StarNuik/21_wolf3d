@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 07:31:09 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/27 09:05:38 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/01 19:18:15 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,19 @@ t_raycast	raycast(t_data *d, t_vector3 pos, float angle)
 	}
 	res.dist = -1.0;
 	return (res);
+}
+
+void		ray_viewport(t_data *d)
+{
+	float			angle;
+	const float		angleDelta = (float)FIELD_OF_VIEW / (float)TEX_WIDTH;
+	int				x;
+
+	angle = d->scene.player.lookAngle - FIELD_OF_VIEW / 2;
+	x = TEX_WIDTH;
+	while (--x >= 0)
+	{
+		d->rend.rays[x] = raycast(d, d->scene.player.pos, angle);
+		angle += angleDelta;
+	}
 }

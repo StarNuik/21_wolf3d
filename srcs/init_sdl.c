@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 19:00:48 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/29 17:13:46 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/01 17:11:07 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,5 @@ void	init_sdl(t_data *d)
 	SDL_SetTextureBlendMode(d->sdl.tex_sprite, SDL_BLENDMODE_BLEND);
 	SDL_SetTextureBlendMode(d->sdl.tex_gui_bg, SDL_BLENDMODE_BLEND);
 	SDL_SetTextureBlendMode(d->sdl.tex_gui, SDL_BLENDMODE_BLEND);
+	SDL_SetRelativeMouseMode(SDL_TRUE);
 }
