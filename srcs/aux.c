@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   aux.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/05 18:45:34 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/02 23:55:55 by sbosmer          ###   ########.fr       */
+/*   Created: 2019/07/02 22:55:38 by sbosmer           #+#    #+#             */
+/*   Updated: 2019/07/02 23:45:44 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-void	init(t_data *d)
+void		static_itoa(int num, int a[], int ct)
 {
-	d->scene.player.pos = (t_vector3){1.5, 1.5, 0};
-	d->scene.player.score = 1234567890;
-	d->scene.player.health = 125;
-	d->scene.player.ammo = 13;
-	read_map(d, "maps/test.wolf");
-	read_textures(d);
-	d->scene.map_loaded = d->map_origin;
-	init_sdl(d);
-	draw_bg(d);
-	draw_gui_bg(d);
-	read_audio(d);
+	while (--ct >= 0)
+	{
+		a[ct] = num % 10;
+		num = num / 10;
+	}
 }

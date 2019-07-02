@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 17:16:51 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/01 17:10:56 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/02 20:49:50 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void		draw_bg(t_data *d)
 		{
 			SDL_SetRenderDrawColor(d->sdl.ren, 30, 30, 30, 0xff);
 			if (y < TEX_HEIGHT / 2)
-				SDL_SetRenderDrawColor(d->sdl.ren, 0, 0, 80, 0xff);
+				SDL_SetRenderDrawColor(d->sdl.ren, 50, 50, 50, 0xff);
 			SDL_RenderDrawPoint(d->sdl.ren, x, y);
 		}
 	}

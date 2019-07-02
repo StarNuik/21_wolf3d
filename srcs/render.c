@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 21:02:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/02 20:36:25 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/02 23:58:14 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,25 @@ void		render_sprites(t_data *d)
 
 void		render_gui(t_data *d)
 {
-	(void)d;
+	int		score[6];
+	int		health[3];
+	int		ammo[2];
+	int		qt;
+
+	SDL_SetRenderTarget(d->sdl.ren, d->sdl.tex_gui);
+	static_itoa(d->scene.player.score, score, 6);
+	static_itoa(d->scene.player.health, health, 3);
+	static_itoa(d->scene.player.ammo, ammo, 2);
+	qt = -1;
+	while (++qt < 6)
+		draw_number(d, GUI_SCORE_OFFSET + qt * GUI_NUM_WIDTH, score[qt]);
+	qt = -1;
+	while (++qt < 3)
+		draw_number(d, GUI_HEALTH_OFFSET + qt * GUI_NUM_WIDTH, health[qt]);
+	qt = -1;
+	while (++qt < 2)
+		draw_number(d, GUI_AMMO_OFFSET + qt * GUI_NUM_WIDTH, ammo[qt]);
+	SDL_SetRenderTarget(d->sdl.ren, NULL);
 }
 
 void		render_pipe(t_data *d)

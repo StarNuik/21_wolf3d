@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 15:04:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/02 18:03:33 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/02 23:58:32 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,47 @@
 # define TARGET_FPS 24
 # define TARGET_MS (1000 / (int)TARGET_FPS)
 
-# define RAYCAST_MAX_DISTANCE 70
-# define RAYCAST_RESOLUTION 0.01
+# define RAYCAST_MAX_DISTANCE 45
+# define RAYCAST_RESOLUTION 0.01f
 # define FIELD_OF_VIEW (M_PI / 2)
 
-# define CONTROL_ROTATION_DELTA 0.001
-# define CONTROL_MOVEMENT_DELTA 0.18
-# define CONTROL_COLLISION_DIST 0.3
+# define CONTROL_ROTATION_DELTA 0.001f
+# define CONTROL_MOVEMENT_DELTA 0.18f
+# define CONTROL_COLLISION_DIST 0.3f
 # define CONTROL_SPEEDHACK 5
 
-# define TEXTURE_POOL_SIZE 16
+# define TEXTURE_POOL_SIZE 24
 # define SOUND_POOL_SIZE 4
 
-# define OBJ_1 (t_object){V3_ZERO, 7, 0, 1, 0, 0.0}
+# define GUI_ZOOM_FACTOR ((float)TEX_HEIGHT / 320.f)
+# define GUI_BG_HEIGHT 90
+# define GUI_NUM_WIDTH 18
+# define GUI_NUM_HEIGHT 36
+# define GUI_NUM_Y 345
+# define GUI_SCORE_OFFSET 102
+# define GUI_HEALTH_OFFSET 370
+# define GUI_AMMO_OFFSET 475
+// # define GUI_BG_HEIGHT 40 * GUI_ZOOM_FACTOR
+// # define GUI_NUM_WIDTH 8 * GUI_ZOOM_FACTOR
+// # define GUI_NUM_HEIGHT 16 * GUI_ZOOM_FACTOR
+
+# define OBJ_CHAND (t_object){V3_ZERO, 13, 0, 1, 0, 0.0f}
+# define OBJ_LAMP (t_object){V3_ZERO, 14, 0, 1, 0, 0.0f}
+# define OBJ_TABLE (t_object){V3_ZERO, 15, 0, 0, 0, 0.0f}
+# define OBJ_TREASU (t_object){V3_ZERO, 16, 1, 1, 500, 0.0f}
+# define OBJ_BUSH (t_object){V3_ZERO, 17, 0, 0, 0, 0.0f}
+# define OBJ_TREE (t_object){V3_ZERO, 18, 0, 0, 0, 0.0f}
+# define OBJ_NULL (t_object){V3_ZERO, -1, -1, -1, -1, -1.0f}
+
+typedef struct			s_object
+{
+	t_vector3			pos;
+	int					tex_id;
+	char				pickup;
+	char				walkthrough;
+	int					score;
+	float				dist_to_player;
+}						t_object;
 
 typedef struct			s_color
 {
@@ -72,17 +100,10 @@ typedef struct			s_player
 {
 	t_vector3			pos;
 	float				lookAngle;
-}						t_player;
-
-typedef struct			s_object
-{
-	t_vector3			pos;
-	int					tex_id;
-	char				pickup;
-	char				walkthrough;
 	int					score;
-	float				dist_to_player;
-}						t_object;
+	int					ammo;
+	int					health;
+}						t_player;
 
 typedef struct			s_texture
 {
@@ -165,6 +186,7 @@ void					ray_viewport(t_data *d);
 void					physics_pipe(t_data *d);
 void					render_pipe(t_data *d);
 void					event_router(t_data *d);
+void					wait_for_next_frame(t_data *d);
 
 float					raycast_basic(t_data *d, t_vector3 pos, float angle);
 t_raycast				raycast(t_data *d, t_vector3 pos, float angle);
@@ -175,10 +197,12 @@ void					draw_wall(t_data *d, const int x, const int height, t_raycast ray);
 void					draw_sprite(t_data *d, const int x, const int size, const t_object obj);
 void					draw_bg(t_data *d);
 void					draw_gui_bg(t_data *d);
-void					wait_for_next_frame(t_data *d);
+void					draw_number(t_data *d, const int x, const int num);
 
 void					play_audio(t_data *d, int num);
 void					stop_audio(t_data *d, int num);
 void					audio_call(void *userdata, unsigned char *stream, int len);
+
+void					static_itoa(int num, int a[], int ct);
 
 #endif

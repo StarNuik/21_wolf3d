@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 04:57:30 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/29 19:59:32 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/02 23:06:44 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,26 @@ void	read_texture_single(t_data *d, char *path, int num, char load_alpha)
 
 void	read_textures(t_data *d)
 {
-	read_texture_single(d, "./textures/Wall_1.bmp", 0, 0);
-	read_texture_single(d, "./textures/Wall_2.bmp", 1, 0);
-	read_texture_single(d, "./textures/Wall_3.bmp", 2, 0);
-	read_texture_single(d, "./textures/Wall_4.bmp", 3, 0);
-	read_texture_single(d, "./textures/Wall_5.bmp", 4, 0);
-	read_texture_single(d, "./textures/Wall_6.bmp", 5, 0);
-	read_texture_single(d, "./textures/waifu.png", 6, 0);
-	read_texture_single(d, "./textures/cat.bmp", 7, 0);
-	read_texture_single(d, "./textures/zharko.jpg", 8, 0);
-	read_texture_single(d, "./textures/subj_0.bmp", 9, 0);
-	read_texture_single(d, "./textures/subj_1.bmp", 10, 0);
-	read_texture_single(d, "./textures/subj_2.bmp", 11, 0);
-	read_texture_single(d, "./textures/subj_3.bmp", 12, 0);
+	read_texture_single(d, "./textures/walls/Wall_1.bmp", 0, 0);
+	read_texture_single(d, "./textures/walls/Wall_2.bmp", 1, 0);
+	read_texture_single(d, "./textures/walls/Wall_3.bmp", 2, 0);
+	read_texture_single(d, "./textures/walls/Wall_4.bmp", 3, 0);
+	read_texture_single(d, "./textures/walls/Wall_5.bmp", 4, 0);
+	read_texture_single(d, "./textures/walls/Wall_6.bmp", 5, 0);
+	read_texture_single(d, "./textures/walls/waifu.png", 6, 0);
+	read_texture_single(d, "./textures/walls/cat.bmp", 7, 0);
+	read_texture_single(d, "./textures/walls/zharko.jpg", 8, 0);
+	read_texture_single(d, "./textures/walls/subj_0.bmp", 9, 0);
+	read_texture_single(d, "./textures/walls/subj_1.bmp", 10, 0);
+	read_texture_single(d, "./textures/walls/subj_2.bmp", 11, 0);
+	read_texture_single(d, "./textures/walls/subj_3.bmp", 12, 0);
+	read_texture_single(d, "./textures/sprites/chandelier.png", 13, 0);
+	read_texture_single(d, "./textures/sprites/lamp.png", 14, 0);
+	read_texture_single(d, "./textures/sprites/table.png", 15, 0);
+	read_texture_single(d, "./textures/sprites/treasure.png", 16, 0);
+	read_texture_single(d, "./textures/sprites/tree.png", 17, 0);
+	read_texture_single(d, "./textures/sprites/tree2.png", 18, 0);
+	read_texture_single(d, "./textures/sprites/tree2.png", 19, 0);
+	read_texture_single(d, "./textures/gui/gui_bg.png", 20, 0);
+	read_texture_single(d, "./textures/gui/font.png", 21, 0);
 }

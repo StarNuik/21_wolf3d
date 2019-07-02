@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 20:46:55 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/01 21:16:18 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/02 21:23:55 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,16 @@ char		parse_entity(t_data *d, char *idk)
 	y = (d->scene.map_x ? arr_length(d->map_origin) / d->scene.map_x : 0);
 	if (*idk == 'e')
 		(void)(1);
-	else if (*idk == 'o')
+	else if (*idk++ == 'o')
 	{
 		cache = ft_memalloc(sizeof(t_object));
-		*cache = OBJ_1;
+		(ft_atoi(idk) == 1 ? *cache = OBJ_CHAND : OBJ_NULL);
+		(ft_atoi(idk) == 2 ? *cache = OBJ_LAMP : OBJ_NULL);
+		(ft_atoi(idk) == 3 ? *cache = OBJ_TABLE : OBJ_NULL);
+		(ft_atoi(idk) == 4 ? *cache = OBJ_TREASU : OBJ_NULL);
+		(ft_atoi(idk) == 5 ? *cache = OBJ_BUSH : OBJ_NULL);
+		(ft_atoi(idk) == 6 ? *cache = OBJ_TREE : OBJ_NULL);
+		// *cache = OBJ_LAMP;
 		cache->pos = (t_vector3){x + 0.5, y + 0.5, 0.0};
 		if (!arr_push(d->scene.object_arr, (long long)cache))
 			return (0);
