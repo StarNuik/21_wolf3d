@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 20:03:10 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/01 17:55:26 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/02 20:43:40 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void		todo_list()
 	printf("\e[30m\n");
 	printf("\e[47m. Todo list:				.\n");
 	printf("\e[100m. Sprite textures			.\n");
-	printf("\e[100m. Sprites don't render through walls	.\n");
-	printf("\e[100m. Sprites don't overlap			.\n");
 	printf("\e[100m. GUI					.\n");
 	printf("\e[100m. Shooting				.\n");
 	printf("\e[100m. Enemies				.\n");

@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 21:02:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/01 22:12:14 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/02 20:36:25 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ void		sort_sprites(t_data *d)
 		key = arr_get(d->rend.object_order, qt);
 		obj = (t_object*)arr_get(d->scene.object_arr, key);
 		ct = qt - 1;
-		while (ct >= 0 && ((t_object*)arr_get(d->scene.object_arr, ct))->dist_to_player > obj->dist_to_player)
+		while (ct >= 0 && ((t_object*)arr_get(d->scene.object_arr, arr_get(d->rend.object_order, ct)))->dist_to_player > obj->dist_to_player)
 		{
-			d->scene.object_arr->field[ct + 1] = arr_get(d->scene.object_arr, ct);
+			arr_set(d->rend.object_order, ct + 1, arr_get(d->rend.object_order, ct));
 			ct--;
 		}
-		d->scene.object_arr->field[ct + 1] = key;
+		arr_set(d->rend.object_order, ct + 1, key);
 	}
 }
 
@@ -71,13 +71,11 @@ void		render_sprites(t_data *d)
 	t_vector3	sub;
 
 	SDL_SetRenderTarget(d->sdl.ren, d->sdl.tex_sprite);
-	// sort_sprites(d);
-	// qt = arr_length(d->scene.object_arr);
-	qt = -1;
-	while (++qt < arr_length(d->scene.object_arr))
+	sort_sprites(d);
+	qt = arr_length(d->scene.object_arr);
+	while (--qt != (size_t)-1)
 	{
-		// object = *(t_object*)arr_get(d->scene.object_arr, arr_get(d->rend.object_order, qt));
-		object = *(t_object*)arr_get(d->scene.object_arr, qt);
+		object = *(t_object*)arr_get(d->scene.object_arr, arr_get(d->rend.object_order, qt));
 		sub = ft_v3subtract(object.pos, d->scene.player.pos);
 		angle = atan2(sub.y, sub.x) + FT_PI / 2.0 - FT_PI;
 		angle = angle + d->scene.player.lookAngle;

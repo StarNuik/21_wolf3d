@@ -5,6 +5,7 @@ SRCS = $(addprefix $(SRCS_DIR), $(SRCS_LIST))
 OBJS = $(SRCS:.c=.o)
 INCL = -I includes/ -I libft/ `sdl2-config --cflags`
 FLAGS = -Wall -Wextra -Werror
+# -fsanitize=address -g
 LIB = `sdl2-config --libs` -L./libft -lft -lm
 
 all: lib $(OBJS) $(NAME)

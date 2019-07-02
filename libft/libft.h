@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 17:02:55 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/06/28 17:01:24 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/02 19:09:20 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -500,6 +500,7 @@ t_array				*arr_init(void);
 char				arr_sizeup(t_array *array);
 char				arr_push(t_array *array, long long num);
 char				arr_unshift(t_array *array, long long num);
+char				arr_set(t_array *arr, size_t index, long long value);
 long long			arr_get(t_array *array, size_t index);
 long long			arr_top(t_array *array);
 long long			arr_last(t_array *array);
