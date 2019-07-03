@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 02:50:29 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/03 02:06:16 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/03 06:58:12 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ void		physics_pipe(t_data *d)
 		rotate_player(d);
 	move_dir = V3_ZERO;
 	if (d->ctrl.forward)
-		move_dir.y = 1.0;
+		move_dir.y += 1.0;
 	if (d->ctrl.backward)
-		move_dir.y = -1.0;
+		move_dir.y += -1.0;
 	if (d->ctrl.right)
-		move_dir.x = -1.0;
+		move_dir.x += -1.0;
 	if (d->ctrl.left)
-		move_dir.x = 1.0;
-	if (d->ctrl.forward || d->ctrl.backward || d->ctrl.left || d->ctrl.right)
+		move_dir.x += 1.0;
+	if (((d->ctrl.forward || d->ctrl.backward) && !(d->ctrl.forward && d->ctrl.backward)) || ((d->ctrl.left || d->ctrl.right) && !(d->ctrl.left && d->ctrl.right)))
 		move_player(d, ft_v3normalize(move_dir));
 	if (d->ctrl.lmb)
-		shoot_pistol(d);
+		player_shoot(d);
 }

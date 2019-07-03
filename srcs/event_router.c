@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 02:35:53 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/03 03:26:52 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/03 06:56:09 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void		key_press_hook(t_data *d)
 	(key == SDLK_d ? d->ctrl.right = 1 : 0);
 	(key == SDLK_q ? stop_audio(d, 0) : 0);
 	(key == SDLK_e ? play_audio(d, 0) : 0);
-	(key == SDLK_1 ? d->scene.player.selected_gun = 0 : 0);
-	(key == SDLK_2 ? d->scene.player.selected_gun = 1 : 0);
-	(key == SDLK_3 ? d->scene.player.selected_gun = 2 : 0);
+	(key == SDLK_1 && !d->scene.player.anim_frame ? d->scene.player.selected_gun = 0 : 0);
+	(key == SDLK_2 && !d->scene.player.anim_frame ? d->scene.player.selected_gun = 1 : 0);
+	(key == SDLK_3 && !d->scene.player.anim_frame ? d->scene.player.selected_gun = 2 : 0);
 	(key == SDLK_KP_1 ? d->ctrl.noclip = !d->ctrl.noclip : 0);
 	(key == SDLK_KP_2 ? d->ctrl.speedhack = !d->ctrl.speedhack : 0);
 	(key == SDLK_KP_3 ? d->ctrl.zharko = 1 : 0);
@@ -57,10 +57,11 @@ void		mouse_move_hook(t_data *d)
 
 void		walk_sound_hack(t_data *d)
 {
-	if ((d->ctrl.forward || d->ctrl.backward) && !(d->ctrl.forward && d->ctrl.backward))
+	if (((d->ctrl.forward || d->ctrl.backward) && !(d->ctrl.forward && d->ctrl.backward)) || ((d->ctrl.left || d->ctrl.right) && !(d->ctrl.left && d->ctrl.right)))
 		play_audio(d, 1);
-	if ((!d->ctrl.forward && !d->ctrl.backward) || (d->ctrl.forward && d->ctrl.backward))
+	if ((!(d->ctrl.forward || d->ctrl.backward) || (d->ctrl.forward && d->ctrl.backward)) && (!(d->ctrl.left || d->ctrl.right) || (d->ctrl.left && d->ctrl.right)))
 		stop_audio(d, 1);
+	(void)d;
 }
 
 void		mouse_press_hook(t_data *d)

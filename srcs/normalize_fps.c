@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 20:03:10 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/03 03:27:27 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/03 08:58:35 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,17 @@ void		todo_list()
 {
 	printf("\e[30m\n");
 	printf("\e[47m. Todo list:				.\n");
-	printf("\e[100m. Health pick-ups			.\n");
-	printf("\e[100m. Score pick-ups			.\n");
-	printf("\e[100m. Fix sprite size			.\n");
-	printf("\e[100m. Different guns?			.\n");
-	printf("\e[100m. Enemies animation			.\n");
-	printf("\e[100m. Enemies pathfinding (use random)	.\n");
-	printf("\e[100m. Swap bad rendering to a camera plane	.\n");
+	printf("\e[47m. Type	Desc				.\n");
+	printf("\e[100m. \e[33mFIX\e[30m	Change to camera plane		.\n");
+	printf("\e[100m. \e[33mFIX\e[30m	Sprite size on close-ups	.\n");
+	printf("\e[100m. \e[32mADD\e[30m	Enemy object			.\n");
+	printf("\e[100m. \e[32mADD\e[30m	Enemy animation			.\n");
+	printf("\e[100m. \e[32mADD\e[30m	Enemy attacks			.\n");
+	printf("\e[100m. \e[32mADD\e[30m	Enemy pathfinding (use random)	.\n");
+	printf("\e[100m. \e[31mBUG\e[30m	Lag spike on object interaction	.\n");
+	// printf("\e[100m. \e[33mFIX\e[30m	Sprite size			.\n");
+	// printf("\e[100m. \e[32mADD\e[30m	Enemy pathfinding (use random)	.\n");
+	// printf("\e[100m. \e[31mBUG\e[30m	Lag spike on object interaction	.\n");
 	printf("\e[39m\e[49m\n");
 }
 
@@ -87,7 +91,6 @@ void		profiler_output(t_data *d, int diff)
 	// PR_FLUSH(3, "Rendering GUI:			");
 	// todo
 	todo_list();
-	printf("Selected gun: %d\n", d->scene.player.selected_gun);
 	(void)d;
 }
 

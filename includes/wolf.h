@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 15:04:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/03 03:25:02 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/03 09:06:26 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@
 # define CONTROL_COLLISION_DIST 0.3f
 # define CONTROL_SPEEDHACK 5
 
-# define PISTOL_ANIM_DURATION 10
+# define WEAP_ANIM_DURATION 10
 
-# define TEXTURE_POOL_SIZE 24
-# define SOUND_POOL_SIZE 4
+# define TEXTURE_POOL_SIZE 32
+# define SOUND_POOL_SIZE 8
 
 # define GUI_ZOOM_FACTOR ((float)TEX_HEIGHT / 320.f)
 # define GUI_BG_HEIGHT 90
@@ -48,7 +48,11 @@
 # define GUI_NUM_Y 345
 # define GUI_SCORE_OFFSET 102
 # define GUI_HEALTH_OFFSET 370
-# define GUI_AMMO_OFFSET 475
+# define GUI_AMMO_OFFSET 465
+# define GUI_WICON_X 570
+# define GUI_WICON_Y 329
+# define GUI_WICON_W 107
+# define GUI_WICON_H 53
 // # define GUI_BG_HEIGHT 40 * GUI_ZOOM_FACTOR
 // # define GUI_NUM_WIDTH 8 * GUI_ZOOM_FACTOR
 // # define GUI_NUM_HEIGHT 16 * GUI_ZOOM_FACTOR
@@ -56,13 +60,15 @@
 # define GUI_GUN_X 205
 # define GUI_GUN_Y 10
 
-# define OBJ_CHAND (t_object){V3_ZERO, 13, 0, 1, 0, 0.0f}
-# define OBJ_LAMP (t_object){V3_ZERO, 14, 0, 1, 0, 0.0f}
-# define OBJ_TABLE (t_object){V3_ZERO, 15, 0, 0, 0, 0.0f}
-# define OBJ_TREASU (t_object){V3_ZERO, 16, 1, 1, 500, 0.0f}
-# define OBJ_BUSH (t_object){V3_ZERO, 17, 0, 0, 0, 0.0f}
-# define OBJ_TREE (t_object){V3_ZERO, 18, 0, 0, 0, 0.0f}
-# define OBJ_NULL (t_object){V3_ZERO, -1, -1, -1, -1, -1.0f}
+# define OBJ_CHAND (t_object){V3_ZERO, 13, 0, 1, 0, 0, 0.0f}
+# define OBJ_LAMP (t_object){V3_ZERO, 14, 0, 1, 0, 0, 0.0f}
+# define OBJ_TABLE (t_object){V3_ZERO, 15, 0, 0, 0, 0, 0.0f}
+# define OBJ_TREASU (t_object){V3_ZERO, 16, 1, 1, 500, 0, 0.0f}
+# define OBJ_BUSH (t_object){V3_ZERO, 17, 0, 0, 0, 0, 0.0f}
+# define OBJ_TREE (t_object){V3_ZERO, 18, 0, 0, 0, 0, 0.0f}
+# define OBJ_HEALTH (t_object){V3_ZERO, 26, 2, 1, 25, 0, 0.0f}
+# define OBJ_AMMO (t_object){V3_ZERO, 27, 3, 1, 5, 0, 0.0f}
+# define OBJ_NULL (t_object){V3_ZERO, -1, -1, -1, -1, 0, -1.0f}
 
 typedef struct			s_object
 {
@@ -70,16 +76,17 @@ typedef struct			s_object
 	int					tex_id;
 	char				pickup;
 	char				walkthrough;
-	int					score;
+	int					value;
+	char				hidden;
 	float				dist_to_player;
 }						t_object;
 
-typedef struct			s_color
-{
-	unsigned char		r;
-	unsigned char		g;
-	unsigned char		b;
-}						t_color;
+// typedef struct			s_color
+// {
+// 	unsigned char		r;
+// 	unsigned char		g;
+// 	unsigned char		b;
+// }						t_color;
 
 typedef struct			s_castret
 {
@@ -110,7 +117,7 @@ typedef struct			s_player
 	int					ammo;
 	int					health;
 	char				selected_gun;
-	char				pistol_frame;
+	char				anim_frame;
 	char				pistol_shot;
 }						t_player;
 
@@ -201,14 +208,15 @@ float					raycast_basic(t_data *d, t_vector3 pos, float angle);
 t_raycast				raycast(t_data *d, t_vector3 pos, float angle);
 
 void					move_player(t_data *d, t_vector3 dirv);
-void					shoot_pistol(t_data *d);
+void					player_shoot(t_data *d);
+void					pickup(t_data *d, t_object *obj);
 
 void					render_walls(t_data *d);
 void					render_sprites(t_data *d);
 void					draw_bg(t_data *d);
 void					draw_gui_bg(t_data *d);
 void					render_gui(t_data *d);
-void					draw_pistol(t_data *d);
+void					draw_weapon(t_data *d);
 
 void					play_audio(t_data *d, int num);
 void					stop_audio(t_data *d, int num);

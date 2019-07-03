@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 20:46:55 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/02 21:23:55 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/03 09:19:54 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ char		parse_entity(t_data *d, char *idk)
 		(ft_atoi(idk) == 4 ? *cache = OBJ_TREASU : OBJ_NULL);
 		(ft_atoi(idk) == 5 ? *cache = OBJ_BUSH : OBJ_NULL);
 		(ft_atoi(idk) == 6 ? *cache = OBJ_TREE : OBJ_NULL);
+		(ft_atoi(idk) == 7 ? *cache = OBJ_HEALTH : OBJ_NULL);
+		(ft_atoi(idk) == 8 ? *cache = OBJ_AMMO : OBJ_NULL);
+		(cache->tex_id == -1 ? map_exit(-1) : 0);
 		// *cache = OBJ_LAMP;
 		cache->pos = (t_vector3){x + 0.5, y + 0.5, 0.0};
 		if (!arr_push(d->scene.object_arr, (long long)cache))
@@ -100,6 +103,11 @@ void		work(t_data *d, int fd)
 			exit(6);
 		if (ret == 0)
 			break ;
+		if (*line == '#' || !ft_strncmp(line, "//", 2))
+		{
+			free(line);
+			continue ;
+		}
 		split = ft_strsplit(line, ' ');
 		if (split == NULL)
 			exit(7);

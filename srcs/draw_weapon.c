@@ -6,16 +6,35 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 01:15:28 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/03 02:55:55 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/03 05:52:18 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-void		draw_pistol(t_data *d)
+// void		pistol_logic(t_data *d)
+// {
+// 	(d->scene.player.anim_frame ? d->scene.player.anim_frame++ : 0);
+// 	(d->scene.player.anim_frame >= WEAP_ANIM_DURATION ? d->scene.player.anim_frame = 0 : 0);
+// }
+
+// void		smg_logic(t_data *d)
+// {
+// 	(d->scene.player.anim_frame ? d->scene.player.anim_frame++ : 0);
+// 	(d->scene.player.anim_frame >= WEAP_ANIM_DURATION ? d->scene.player.anim_frame = 0 : 0);
+// 	(void)d;
+// }
+
+// void		bfg_logic(t_data *d)
+// {
+
+// 	(void)d;
+// }
+
+void		draw_weapon(t_data *d)
 {
-	const t_exture	tex = d->tex_pool[22];
-	const int		animFrame = d->scene.player.pistol_frame / 2 % 5;
+	const t_exture	tex = d->tex_pool[23 + d->scene.player.selected_gun];
+	const int		animFrame = d->scene.player.anim_frame / 2 % 5;
 	int				x;
 	int				y;
 	int				tex_id;
@@ -34,12 +53,6 @@ void		draw_pistol(t_data *d)
 			SDL_RenderDrawPoint(d->sdl.ren, x, y);
 		}
 	}
-	if (d->scene.player.pistol_frame)
-		d->scene.player.pistol_frame++;
-	if (d->scene.player.pistol_frame >= PISTOL_ANIM_DURATION)
-	{
-		d->scene.player.pistol_frame = 0;
-		stop_audio(d, 3);
-	}
-	(void)d;
+	(d->scene.player.anim_frame ? d->scene.player.anim_frame++ : 0);
+	(d->scene.player.anim_frame >= WEAP_ANIM_DURATION ? d->scene.player.anim_frame = 0 : 0);
 }

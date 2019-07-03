@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 13:24:43 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/03 02:54:58 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/03 09:25:10 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,9 @@ void	read_audio(t_data *d)
 	read_audio_file(d, "./sounds/walk_g.wav", 1);
 	read_audio_file(d, "./sounds/hit.wav", 2);
 	read_audio_file(d, "./sounds/pistol_shot.wav", 3);
+	read_audio_file(d, "./sounds/mg_shot.wav", 4);
+	read_audio_file(d, "./sounds/pickup.wav", 5);
+	read_audio_file(d, "./sounds/crunch.wav", 6);
+	read_audio_file(d, "./sounds/ammo.wav", 7);
 	play_audio(d, 0);
 }
