@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 23:04:22 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/02 23:52:39 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/03 01:16:34 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,28 @@ void		draw_number(t_data *d, const int in_x, const int num)
 	(void)d;
 	(void)in_x;
 	(void)num;
+}
+
+void		render_gui(t_data *d)
+{
+	int		score[6];
+	int		health[3];
+	int		ammo[2];
+	int		qt;
+
+	SDL_SetRenderTarget(d->sdl.ren, d->sdl.tex_gui);
+	static_itoa(d->scene.player.score, score, 6);
+	static_itoa(d->scene.player.health, health, 3);
+	static_itoa(d->scene.player.ammo, ammo, 2);
+	qt = -1;
+	while (++qt < 6)
+		draw_number(d, GUI_SCORE_OFFSET + qt * GUI_NUM_WIDTH, score[qt]);
+	qt = -1;
+	while (++qt < 3)
+		draw_number(d, GUI_HEALTH_OFFSET + qt * GUI_NUM_WIDTH, health[qt]);
+	qt = -1;
+	while (++qt < 2)
+		draw_number(d, GUI_AMMO_OFFSET + qt * GUI_NUM_WIDTH, ammo[qt]);
+	draw_pistol(d);
+	SDL_SetRenderTarget(d->sdl.ren, NULL);
 }

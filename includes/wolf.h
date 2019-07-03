@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 15:04:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/02 23:58:32 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/03 03:25:02 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # define CONTROL_COLLISION_DIST 0.3f
 # define CONTROL_SPEEDHACK 5
 
+# define PISTOL_ANIM_DURATION 10
+
 # define TEXTURE_POOL_SIZE 24
 # define SOUND_POOL_SIZE 4
 
@@ -50,6 +52,9 @@
 // # define GUI_BG_HEIGHT 40 * GUI_ZOOM_FACTOR
 // # define GUI_NUM_WIDTH 8 * GUI_ZOOM_FACTOR
 // # define GUI_NUM_HEIGHT 16 * GUI_ZOOM_FACTOR
+# define GUI_GUN_SIZE 300
+# define GUI_GUN_X 205
+# define GUI_GUN_Y 10
 
 # define OBJ_CHAND (t_object){V3_ZERO, 13, 0, 1, 0, 0.0f}
 # define OBJ_LAMP (t_object){V3_ZERO, 14, 0, 1, 0, 0.0f}
@@ -87,6 +92,7 @@ typedef struct			s_controls
 {
 	int					mouse_rel_x;
 	int					mouse_rel_y;
+	char				lmb;
 	char				forward;
 	char				backward;
 	char				left;
@@ -103,6 +109,9 @@ typedef struct			s_player
 	int					score;
 	int					ammo;
 	int					health;
+	char				selected_gun;
+	char				pistol_frame;
+	char				pistol_shot;
 }						t_player;
 
 typedef struct			s_texture
@@ -192,12 +201,14 @@ float					raycast_basic(t_data *d, t_vector3 pos, float angle);
 t_raycast				raycast(t_data *d, t_vector3 pos, float angle);
 
 void					move_player(t_data *d, t_vector3 dirv);
+void					shoot_pistol(t_data *d);
 
-void					draw_wall(t_data *d, const int x, const int height, t_raycast ray);
-void					draw_sprite(t_data *d, const int x, const int size, const t_object obj);
+void					render_walls(t_data *d);
+void					render_sprites(t_data *d);
 void					draw_bg(t_data *d);
 void					draw_gui_bg(t_data *d);
-void					draw_number(t_data *d, const int x, const int num);
+void					render_gui(t_data *d);
+void					draw_pistol(t_data *d);
 
 void					play_audio(t_data *d, int num);
 void					stop_audio(t_data *d, int num);

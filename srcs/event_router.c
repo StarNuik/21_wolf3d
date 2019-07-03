@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 02:35:53 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/01 14:15:08 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/03 03:26:52 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,13 @@ void		key_press_hook(t_data *d)
 	(key == SDLK_d ? d->ctrl.right = 1 : 0);
 	(key == SDLK_q ? stop_audio(d, 0) : 0);
 	(key == SDLK_e ? play_audio(d, 0) : 0);
-	(key == SDLK_1 ? d->ctrl.noclip = !d->ctrl.noclip : 0);
-	(key == SDLK_2 ? d->ctrl.speedhack = !d->ctrl.speedhack : 0);
-	(key == SDLK_3 ? d->ctrl.zharko = 1 : 0);
-	(key == SDLK_3 ? play_audio(d, 2) : 0);
+	(key == SDLK_1 ? d->scene.player.selected_gun = 0 : 0);
+	(key == SDLK_2 ? d->scene.player.selected_gun = 1 : 0);
+	(key == SDLK_3 ? d->scene.player.selected_gun = 2 : 0);
+	(key == SDLK_KP_1 ? d->ctrl.noclip = !d->ctrl.noclip : 0);
+	(key == SDLK_KP_2 ? d->ctrl.speedhack = !d->ctrl.speedhack : 0);
+	(key == SDLK_KP_3 ? d->ctrl.zharko = 1 : 0);
+	(key == SDLK_KP_3 ? play_audio(d, 2) : 0);
 }
 
 void		key_release_hook(t_data *d)
@@ -60,6 +63,22 @@ void		walk_sound_hack(t_data *d)
 		stop_audio(d, 1);
 }
 
+void		mouse_press_hook(t_data *d)
+{
+	if (d->sdl.event.button.button == SDL_BUTTON_LEFT)
+		d->ctrl.lmb = 1;
+}
+
+void		mouse_release_hook(t_data *d)
+{
+	if (d->sdl.event.button.button == SDL_BUTTON_LEFT)
+	{
+		d->ctrl.lmb = 0;
+		// Costil
+		d->scene.player.pistol_shot = 0;
+	}
+}
+
 void		event_router(t_data *d)
 {
 	d->sdl.mouse_move_processed = 0;
@@ -73,6 +92,10 @@ void		event_router(t_data *d)
 			key_release_hook(d);
 		if (d->sdl.event.type == SDL_MOUSEMOTION)
 			mouse_move_hook(d);
+		if (d->sdl.event.type == SDL_MOUSEBUTTONDOWN)
+			mouse_press_hook(d);
+		if (d->sdl.event.type == SDL_MOUSEBUTTONUP)
+			mouse_release_hook(d);
 	}
 	if (!d->sdl.mouse_move_processed)
 	{

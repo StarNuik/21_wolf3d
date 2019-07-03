@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 02:50:29 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/01 15:44:22 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/03 02:06:16 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,6 @@ void		physics_pipe(t_data *d)
 		move_dir.x = 1.0;
 	if (d->ctrl.forward || d->ctrl.backward || d->ctrl.left || d->ctrl.right)
 		move_player(d, ft_v3normalize(move_dir));
+	if (d->ctrl.lmb)
+		shoot_pistol(d);
 }

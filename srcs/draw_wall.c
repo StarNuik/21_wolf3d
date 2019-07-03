@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 01:32:05 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/02 17:58:57 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/03 00:52:07 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,25 @@ void		draw_wall(t_data *d, const int x, const int height, t_raycast ray)
 		SDL_SetRenderDrawColor(d->sdl.ren, tex.data[id * 3], tex.data[id * 3 + 1], tex.data[id * 3 + 2], 0xff);
 		SDL_RenderDrawPoint(d->sdl.ren, x, qt);
 	}
+}
+
+void		render_walls(t_data *d)
+{
+	int				x;
+	float			height;
+	t_raycast		ray;
+	const float		angleDelta = (float)FIELD_OF_VIEW / (float)TEX_WIDTH;
+
+	SDL_SetRenderTarget(d->sdl.ren, d->sdl.tex_wall);
+	x = TEX_WIDTH;
+	while (--x >= 0)
+	{
+		ray = d->rend.rays[x];
+		height = ray.dist * cos(angleDelta * x - FIELD_OF_VIEW / 2);
+		height = (float)TEX_HEIGHT / height;
+		draw_wall(d, x, height, ray);
+		// x++;
+	}
+	SDL_SetRenderTarget(d->sdl.ren, NULL);
+	// ft_putmem
 }
