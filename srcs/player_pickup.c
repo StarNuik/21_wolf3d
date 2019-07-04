@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 07:11:01 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/03 09:26:25 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/04 23:27:09 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		ammo_pickup(t_data *d, t_object *obj)
 
 void		pickup(t_data *d, t_object *obj)
 {
-	obj->hidden = 1;
+	obj->rend.hidden = 1;
 	(obj->pickup == 1 ? score_pickup(d, obj) : 0);
 	(obj->pickup == 2 ? health_pickup(d, obj) : 0);
 	(obj->pickup == 3 ? ammo_pickup(d, obj) : 0);

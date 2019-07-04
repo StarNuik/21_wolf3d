@@ -6,11 +6,33 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 13:59:06 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/03 07:14:20 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/05 02:50:31 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
+
+void		spritequeue_remove(t_data *d, t_rendobj *obj)
+{
+	size_t			qt;
+	const size_t	len = arr_length(d->rend.sprite_queue);
+
+	qt = arr_find(d->rend.sprite_queue, (long long)obj);
+	arr_drop(d->rend.sprite_queue, qt);
+	arr_pop(d->rend.object_order);
+	qt = -1;
+	while (++qt < len)
+		arr_set(d->rend.object_order, qt, qt);
+}
+
+char		spritequeue_add(t_data *d, t_rendobj *obj)
+{
+	if (!arr_push(d->rend.sprite_queue, (long long)obj))
+		return (0);
+	if (!arr_push(d->rend.object_order, arr_length(d->rend.object_order)))
+		return (0);
+	return (1);
+}
 
 int			get_tex_id(const int in_x, const int x, const int y, const int size, const int tex_height, const int tex_width)
 {
@@ -23,7 +45,7 @@ int			get_tex_id(const int in_x, const int x, const int y, const int size, const
 	return (tex_x + tex_y);
 }
 
-void		draw_sprite(t_data *d, const int in_x, const int size, const t_object obj)
+void		draw_sprite(t_data *d, const int in_x, const int size, const t_rendobj obj)
 {
 	const t_exture	tex = d->tex_pool[obj.tex_id];
 	int				x;
@@ -53,22 +75,22 @@ void		sort_sprites(t_data *d)
 	int			qt;
 	int			ct;
 	int			key;
-	const int	len = arr_length(d->scene.object_arr);
-	t_object	*obj;
+	const int	len = arr_length(d->rend.sprite_queue);
+	t_rendobj	*obj;
 
 	qt = -1;
 	while (++qt < len)
 	{
-		obj = ((t_object*)arr_get(d->scene.object_arr, qt));
+		obj = ((t_rendobj*)arr_get(d->rend.sprite_queue, qt));
 		obj->dist_to_player = ft_v3magnitude(ft_v3subtract(d->scene.player.pos, obj->pos));
 	}
 	qt = 0;
 	while (++qt < len)
 	{
 		key = arr_get(d->rend.object_order, qt);
-		obj = (t_object*)arr_get(d->scene.object_arr, key);
+		obj = (t_rendobj*)arr_get(d->rend.sprite_queue, key);
 		ct = qt - 1;
-		while (ct >= 0 && ((t_object*)arr_get(d->scene.object_arr, arr_get(d->rend.object_order, ct)))->dist_to_player > obj->dist_to_player)
+		while (ct >= 0 && ((t_rendobj*)arr_get(d->rend.sprite_queue, arr_get(d->rend.object_order, ct)))->dist_to_player > obj->dist_to_player)
 		{
 			arr_set(d->rend.object_order, ct + 1, arr_get(d->rend.object_order, ct));
 			ct--;
@@ -82,19 +104,19 @@ void		render_sprites(t_data *d)
 	size_t		qt;
 	float		size;
 	float		angle;
-	t_object	*object;
+	t_rendobj	*object;
 	t_vector3	sub;
 
 	SDL_SetRenderTarget(d->sdl.ren, d->sdl.tex_sprite);
 	sort_sprites(d);
-	qt = arr_length(d->scene.object_arr);
+	qt = arr_length(d->rend.sprite_queue);
 	while (--qt != (size_t)-1)
 	{
-		object = (t_object*)arr_get(d->scene.object_arr, arr_get(d->rend.object_order, qt));
+		object = (t_rendobj*)arr_get(d->rend.sprite_queue, arr_get(d->rend.object_order, qt));
 		if (object->hidden)
 			continue ;
 		sub = ft_v3subtract(object->pos, d->scene.player.pos);
-		(object->pickup && ft_v3dot2(sub) <= 1.f ? pickup(d, object) : 0);
+		// (object->pickup && ft_v3dot2(sub) <= 1.f ? pickup(d, object) : 0);
 		angle = atan2(sub.y, sub.x) + FT_PI / 2.0 - FT_PI;
 		angle = angle + d->scene.player.lookAngle;
 		if (angle > FT_PI)

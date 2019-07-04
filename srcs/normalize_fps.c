@@ -6,24 +6,37 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 20:03:10 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/03 08:58:35 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/04 23:04:04 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
+void		debug_output()
+{
+	printf("Sizeof t_object: %lu\n", sizeof(t_object));
+	// printf("\n");
+	// printf("\n");
+	// printf("\n");
+	// printf("\n");
+	// printf("\n");
+	// printf("\n");
+}
+
 void		todo_list()
 {
-	printf("\e[30m\n");
-	printf("\e[47m. Todo list:				.\n");
-	printf("\e[47m. Type	Desc				.\n");
-	printf("\e[100m. \e[33mFIX\e[30m	Change to camera plane		.\n");
-	printf("\e[100m. \e[33mFIX\e[30m	Sprite size on close-ups	.\n");
-	printf("\e[100m. \e[32mADD\e[30m	Enemy object			.\n");
-	printf("\e[100m. \e[32mADD\e[30m	Enemy animation			.\n");
-	printf("\e[100m. \e[32mADD\e[30m	Enemy attacks			.\n");
-	printf("\e[100m. \e[32mADD\e[30m	Enemy pathfinding (use random)	.\n");
-	printf("\e[100m. \e[31mBUG\e[30m	Lag spike on object interaction	.\n");
+	printf("\e[30m\n\n\n\n\n");
+	printf("\e[47m. Todo list:						.\n");
+	printf("\e[47m. Type	Desc						.\n");
+	printf("\e[100m. \e[33mFIX\e[30m	Change to camera plane				.\n");
+	printf("\e[100m. \e[33mFIX\e[30m	Sprite size on close-ups			.\n");
+	printf("\e[100m. \e[32mADD\e[30m	Raymarching to objects?				.\n");
+	printf("\e[100m. \e[32mADD\e[30m	Object destruction				.\n");
+	printf("\e[100m. \e[32mADD\e[30m	Doors						.\n");
+	printf("\e[100m. \e[32mADD\e[30m	Enemy object					.\n");
+	printf("\e[100m. \e[32mADD\e[30m	Enemy pathfinding (use A*)			.\n");
+	printf("\e[100m. \e[32mADD\e[30m	Enemy animation					.\n");
+	printf("\e[100m. \e[32mADD\e[30m	Enemy attacks					.\n");
 	// printf("\e[100m. \e[33mFIX\e[30m	Sprite size			.\n");
 	// printf("\e[100m. \e[32mADD\e[30m	Enemy pathfinding (use random)	.\n");
 	// printf("\e[100m. \e[31mBUG\e[30m	Lag spike on object interaction	.\n");
@@ -85,12 +98,9 @@ void		profiler_output(t_data *d, int diff)
 		printf("Rendering GUI:			\e[33m%d\e[39m ms\n", PR_ELAPSED(3));
 	else
 		printf("Rendering GUI:			\e[91m%d\e[39m ms\n", PR_ELAPSED(3));
-	// PR_FLUSH(0, "Physics:			");
-	// PR_FLUSH(1, "Rendering walls:		");
-	// PR_FLUSH(2, "Rendering sprites:		");
-	// PR_FLUSH(3, "Rendering GUI:			");
 	// todo
 	todo_list();
+	debug_output();
 	(void)d;
 }
 

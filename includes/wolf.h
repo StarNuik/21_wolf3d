@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 15:04:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/03 09:06:26 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/05 02:47:31 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,33 +60,38 @@
 # define GUI_GUN_X 205
 # define GUI_GUN_Y 10
 
-# define OBJ_CHAND (t_object){V3_ZERO, 13, 0, 1, 0, 0, 0.0f}
-# define OBJ_LAMP (t_object){V3_ZERO, 14, 0, 1, 0, 0, 0.0f}
-# define OBJ_TABLE (t_object){V3_ZERO, 15, 0, 0, 0, 0, 0.0f}
-# define OBJ_TREASU (t_object){V3_ZERO, 16, 1, 1, 500, 0, 0.0f}
-# define OBJ_BUSH (t_object){V3_ZERO, 17, 0, 0, 0, 0, 0.0f}
-# define OBJ_TREE (t_object){V3_ZERO, 18, 0, 0, 0, 0, 0.0f}
-# define OBJ_HEALTH (t_object){V3_ZERO, 26, 2, 1, 25, 0, 0.0f}
-# define OBJ_AMMO (t_object){V3_ZERO, 27, 3, 1, 5, 0, 0.0f}
-# define OBJ_NULL (t_object){V3_ZERO, -1, -1, -1, -1, 0, -1.0f}
+# define OBJ_CHAND	(t_object){{V3_ZERO, 13, 0.f, 0}, 0, 1, 0}
+# define OBJ_LAMP	(t_object){{V3_ZERO, 14, 0.f, 0}, 0, 1, 0}
+# define OBJ_TABLE	(t_object){{V3_ZERO, 15, 0.f, 0}, 0, 0, 0}
+# define OBJ_TREASU	(t_object){{V3_ZERO, 16, 0.f, 0}, 1, 1, 500}
+# define OBJ_BUSH	(t_object){{V3_ZERO, 17, 0.f, 0}, 0, 0, 0}
+# define OBJ_TREE	(t_object){{V3_ZERO, 18, 0.f, 0}, 0, 0, 0}
+# define OBJ_HEALTH	(t_object){{V3_ZERO, 26, 0.f, 0}, 2, 1, 25}
+# define OBJ_AMMO	(t_object){{V3_ZERO, 27, 0.f, 0}, 3, 1, 5}
+# define OBJ_NULL	(t_object){{V3_ZERO, -1, 0.f, 0}, -1, -1, -1}
 
-typedef struct			s_object
+typedef struct			s_rend_obj
 {
 	t_vector3			pos;
 	int					tex_id;
+	float				dist_to_player;
+	//! Get rid of this ugly hack
+	char				hidden;
+}						t_rendobj;
+
+typedef struct			s_object
+{
+	t_rendobj			rend;
 	char				pickup;
 	char				walkthrough;
 	int					value;
-	char				hidden;
-	float				dist_to_player;
 }						t_object;
 
-// typedef struct			s_color
-// {
-// 	unsigned char		r;
-// 	unsigned char		g;
-// 	unsigned char		b;
-// }						t_color;
+typedef struct			s_enemy
+{
+	t_rendobj			rend;
+	int					health;
+}						t_enemy;
 
 typedef struct			s_castret
 {
@@ -148,6 +153,7 @@ typedef struct			s_scene
 	int					map_y;
 	int					track_playing;
 	t_array				*object_arr;
+	t_array				*enemy_arr;
 }						t_scene;
 
 typedef struct			s_sdl
@@ -173,6 +179,7 @@ typedef struct			s_renderer
 {
 	t_raycast			rays[TEX_WIDTH];
 	t_array				*object_order;
+	t_array				*sprite_queue;
 }						t_rend;
 
 typedef struct			s_data
@@ -217,6 +224,8 @@ void					draw_bg(t_data *d);
 void					draw_gui_bg(t_data *d);
 void					render_gui(t_data *d);
 void					draw_weapon(t_data *d);
+char					spritequeue_add(t_data *d, t_rendobj *obj);
+void					spritequeue_remove(t_data *d, t_rendobj *obj);
 
 void					play_audio(t_data *d, int num);
 void					stop_audio(t_data *d, int num);
