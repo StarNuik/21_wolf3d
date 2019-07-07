@@ -1,3 +1,4 @@
 *.o
+*.d
 wolf3d
 SDL2.framework

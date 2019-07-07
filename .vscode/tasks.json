@@ -4,6 +4,20 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
+			"label": "Lib",
+			"type": "shell",
+			"command": "make lib",
+			"group": "test",
+			"presentation": {
+				"echo": false,
+				"reveal": "never",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			}
+		},
+		{
 			"label": "Clean",
 			"type": "shell",
 			"command": "make fclean",
@@ -52,8 +66,7 @@
 				"panel": "shared",
 				"showReuseMessage": false,
 				"clear": true
-			},
-			"dependsOn": ["Clean"]
+			}
 		}
 	]
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   physics.c                                          :+:      :+:    :+:   */
+/*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 02:50:29 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/03 06:58:12 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/07 06:54:19 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@ void		rotate_player(t_data *d)
 	d->scene.player.lookAngle = angle;
 }
 
-void		physics_pipe(t_data *d)
+void		player_pipe(t_data *d)
 {
 	t_vector3	move_dir;
 
+	test_pickups(d);
 	if (d->ctrl.mouse_rel_x)
 		rotate_player(d);
 	move_dir = V3_ZERO;

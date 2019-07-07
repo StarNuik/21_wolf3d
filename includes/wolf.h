@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 15:04:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/05 02:47:31 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/07 07:04:14 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,15 @@
 # define GUI_GUN_X 205
 # define GUI_GUN_Y 10
 
-# define OBJ_CHAND	(t_object){{V3_ZERO, 13, 0.f, 0}, 0, 1, 0}
-# define OBJ_LAMP	(t_object){{V3_ZERO, 14, 0.f, 0}, 0, 1, 0}
-# define OBJ_TABLE	(t_object){{V3_ZERO, 15, 0.f, 0}, 0, 0, 0}
-# define OBJ_TREASU	(t_object){{V3_ZERO, 16, 0.f, 0}, 1, 1, 500}
-# define OBJ_BUSH	(t_object){{V3_ZERO, 17, 0.f, 0}, 0, 0, 0}
-# define OBJ_TREE	(t_object){{V3_ZERO, 18, 0.f, 0}, 0, 0, 0}
-# define OBJ_HEALTH	(t_object){{V3_ZERO, 26, 0.f, 0}, 2, 1, 25}
-# define OBJ_AMMO	(t_object){{V3_ZERO, 27, 0.f, 0}, 3, 1, 5}
-# define OBJ_NULL	(t_object){{V3_ZERO, -1, 0.f, 0}, -1, -1, -1}
+# define OBJ_CHAND	(t_object){{V3_ZERO, 13, 0.f, 0}, 0, -1, 0, 1, 0}
+# define OBJ_LAMP	(t_object){{V3_ZERO, 14, 0.f, 0}, 0, -1, 0, 1, 0}
+# define OBJ_TABLE	(t_object){{V3_ZERO, 15, 0.f, 0}, 20, 28, 0, 0, 0}
+# define OBJ_TREASU	(t_object){{V3_ZERO, 16, 0.f, 0}, 0, -1, 1, 1, 500}
+# define OBJ_BUSH	(t_object){{V3_ZERO, 17, 0.f, 0}, 0, -1, 0, 0, 0}
+# define OBJ_TREE	(t_object){{V3_ZERO, 18, 0.f, 0}, 20, 19, 0, 0, 0}
+# define OBJ_HEALTH	(t_object){{V3_ZERO, 26, 0.f, 0}, 0, -1, 2, 1, 25}
+# define OBJ_AMMO	(t_object){{V3_ZERO, 27, 0.f, 0}, 0, -1, 3, 1, 5}
+# define OBJ_NULL	(t_object){{V3_ZERO, -1, 0.f, 0}, 0, -1, -1, -1, -1}
 
 typedef struct			s_rend_obj
 {
@@ -82,6 +82,8 @@ typedef struct			s_rend_obj
 typedef struct			s_object
 {
 	t_rendobj			rend;
+	int					health;
+	int					broke_tex_id;
 	char				pickup;
 	char				walkthrough;
 	int					value;
@@ -153,6 +155,8 @@ typedef struct			s_scene
 	int					map_y;
 	int					track_playing;
 	t_array				*object_arr;
+	t_array				*destr_object_arr;
+	t_array				*pickup_arr;
 	t_array				*enemy_arr;
 }						t_scene;
 
@@ -206,7 +210,8 @@ void					read_textures(t_data *d);
 
 void					general_pipe(t_data *d);
 void					ray_viewport(t_data *d);
-void					physics_pipe(t_data *d);
+void					player_pipe(t_data *d);
+void					enemy_pipe(t_data *d);
 void					render_pipe(t_data *d);
 void					event_router(t_data *d);
 void					wait_for_next_frame(t_data *d);
@@ -216,7 +221,7 @@ t_raycast				raycast(t_data *d, t_vector3 pos, float angle);
 
 void					move_player(t_data *d, t_vector3 dirv);
 void					player_shoot(t_data *d);
-void					pickup(t_data *d, t_object *obj);
+void					test_pickups(t_data *d);
 
 void					render_walls(t_data *d);
 void					render_sprites(t_data *d);
@@ -226,6 +231,7 @@ void					render_gui(t_data *d);
 void					draw_weapon(t_data *d);
 char					spritequeue_add(t_data *d, t_rendobj *obj);
 void					spritequeue_remove(t_data *d, t_rendobj *obj);
+void					sort_sprites(t_data *d);
 
 void					play_audio(t_data *d, int num);
 void					stop_audio(t_data *d, int num);

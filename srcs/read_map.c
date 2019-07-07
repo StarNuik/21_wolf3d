@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 20:46:55 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/05 02:51:37 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/07 06:34:14 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,19 @@ char		parse_entity(t_data *d, char *idk)
 		(cache->rend.tex_id == -1 ? map_exit(-1) : 0);
 		// *cache = OBJ_LAMP;
 		cache->rend.pos = (t_vector3){x + 0.5, y + 0.5, 0.0};
-		if (!arr_push(d->scene.object_arr, (long long)cache))
-			return (0);
+		if (cache->health > 0)
+		{
+			if (!arr_push(d->scene.destr_object_arr, (long long)cache))
+				return (0);
+		}
+		else if (cache->pickup > 0)
+		{
+			if (!arr_push(d->scene.pickup_arr, (long long)cache))
+				return (0);
+		}
+		else
+			if (!arr_push(d->scene.object_arr, (long long)cache))
+				return (0);
 		if (!spritequeue_add(d, &cache->rend))
 			return (0);
 	}
@@ -122,6 +133,8 @@ void		read_map(t_data *d, char *path)
 	
 	d->map_origin = arr_init();
 	d->scene.object_arr = arr_init();
+	d->scene.destr_object_arr = arr_init();
+	d->scene.pickup_arr = arr_init();
 	d->rend.object_order = arr_init();
 	d->rend.sprite_queue = arr_init();
 	if (!d->map_origin)

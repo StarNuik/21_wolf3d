@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 21:02:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/03 13:09:34 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/05 15:14:20 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@ void		render_pipe(t_data *d)
 	SDL_SetRenderDrawColor(d->sdl.ren, 0x00, 0x00, 0x00, 0x00);
 	SDL_SetRenderTarget(d->sdl.ren, d->sdl.tex_gui);
 	SDL_RenderClear(d->sdl.ren);
-	PR_START(4);
-	ray_viewport(d);
-	PR_END(4);
 	PR_START(1);
 	render_walls(d);
 	PR_END(1);

@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 04:57:30 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/03 09:17:57 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/07 06:23:10 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	read_textures(t_data *d)
 	read_texture_single(d, "./textures/sprites/treasure.png", 16, 0);
 	read_texture_single(d, "./textures/sprites/tree.png", 17, 0);
 	read_texture_single(d, "./textures/sprites/tree2.png", 18, 0);
-	read_texture_single(d, "./textures/sprites/tree2.png", 19, 0);
+	read_texture_single(d, "./textures/sprites/tree2_broke.png", 19, 0);
 	read_texture_single(d, "./textures/gui/gui_bg.png", 20, 0);
 	read_texture_single(d, "./textures/gui/font.png", 21, 0);
 	read_texture_single(d, "./textures/gui/gun_select.png", 22, 0);
@@ -55,4 +55,5 @@ void	read_textures(t_data *d)
 	read_texture_single(d, "./textures/gui/bfg_anim.png", 25, 0);
 	read_texture_single(d, "./textures/sprites/health.png", 26, 0);
 	read_texture_single(d, "./textures/sprites/ammo.png", 27, 0);
+	read_texture_single(d, "./textures/sprites/table_broke.png", 28, 0);
 }

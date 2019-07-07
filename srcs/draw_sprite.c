@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 13:59:06 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/05 02:50:31 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/05 15:12:03 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void		render_sprites(t_data *d)
 	t_vector3	sub;
 
 	SDL_SetRenderTarget(d->sdl.ren, d->sdl.tex_sprite);
-	sort_sprites(d);
+	// sort_sprites(d);
 	qt = arr_length(d->rend.sprite_queue);
 	while (--qt != (size_t)-1)
 	{

@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 20:03:10 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/04 23:04:04 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/05 15:15:24 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,19 @@ void		profiler_output(t_data *d, int diff)
 	printf("Frames per second:		%.2f\n", 1000.0 / (float)diff);
 	printf("\n");
 
-	if (PR_ELAPSED(0) <= green_render_time)
+	if (PR_ELAPSED(4) <= green_render_time)
 		printf("Raycast:			\e[32m%d\e[39m ms\n", PR_ELAPSED(4));
-	else if (PR_ELAPSED(0) <= yellow_render_time)
+	else if (PR_ELAPSED(4) <= yellow_render_time)
 		printf("Raycast:			\e[33m%d\e[39m ms\n", PR_ELAPSED(4));
 	else
 		printf("Raycast:			\e[91m%d\e[39m ms\n", PR_ELAPSED(4));
+
+	if (PR_ELAPSED(5) <= green_render_time)
+		printf("Sprite sorting:			\e[32m%d\e[39m ms\n", PR_ELAPSED(5));
+	else if (PR_ELAPSED(5) <= yellow_render_time)
+		printf("Sprite sorting:			\e[33m%d\e[39m ms\n", PR_ELAPSED(5));
+	else
+		printf("Sprite sorting:			\e[91m%d\e[39m ms\n", PR_ELAPSED(5));
 
 	if (PR_ELAPSED(0) <= green_render_time)
 		printf("Physics:			\e[32m%d\e[39m ms\n", PR_ELAPSED(0));
