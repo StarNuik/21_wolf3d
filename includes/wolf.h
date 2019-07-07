@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 15:04:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/07 07:04:14 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/07 09:39:53 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@
 # define CONTROL_SPEEDHACK 5
 
 # define WEAP_ANIM_DURATION 10
+# define HIT_CIRCLE_RADIUS_SQUARED 0.25
+# define WEAP_PISTOL_DAMAGE 7
+# define WEAP_SMG_DAMAGE 14
+# define WEAP_BFG_DAMAGE 20
 
 # define TEXTURE_POOL_SIZE 32
 # define SOUND_POOL_SIZE 8
@@ -101,6 +105,13 @@ typedef struct			s_castret
 	char				type;
 	t_vector3			hit;
 }						t_raycast;
+
+typedef struct			s_shothit
+{
+	t_rendobj			*closest;
+	t_vector3			ray_dir;
+	t_vector3			ray_start;
+}						t_shotdata;
 
 typedef struct			s_controls
 {
@@ -222,6 +233,8 @@ t_raycast				raycast(t_data *d, t_vector3 pos, float angle);
 void					move_player(t_data *d, t_vector3 dirv);
 void					player_shoot(t_data *d);
 void					test_pickups(t_data *d);
+void					cast_shot(t_data *d, int damage);
+void					damage_object(t_data *d, t_object *object, int damage);
 
 void					render_walls(t_data *d);
 void					render_sprites(t_data *d);

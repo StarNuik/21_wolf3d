@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 17:02:55 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/05 02:21:22 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/07 07:40:49 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -507,9 +507,12 @@ long long			arr_last(t_array *array);
 size_t				arr_length(t_array *array);
 long long			arr_pop(t_array *array);
 long long			arr_shift(t_array *array);
-void				arr_iter(t_array *arr, void (*f)(size_t, long long));
+void				arr_iter(t_array *array, void (*f)(size_t, long long));
+void				arr_iterv(t_array *array, void *user_data,
+	void (*f)(size_t, long long, void *));
 long long			arr_drop(t_array *array, size_t index);
-size_t				arr_find(t_array *arr, long long target);
+size_t				arr_find(t_array *array, long long target);
+long long			arr_find_destroy(t_array *arr, long long target);
 char				arr_absorb(t_array *array, long long *source,
 	size_t ammount);
 char				arr_rabsorb(t_array *array, long long *source,
