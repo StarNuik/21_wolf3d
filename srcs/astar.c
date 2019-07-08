@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 23:55:22 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/08 07:31:57 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/08 13:27:35 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ t_astar		*astar_init(t_array *map, t_array *walkable_mask, const int size_x, con
 
 	if (!(astar = ft_memalloc(sizeof(t_astar))) || !(astar->open = arr_init()) || !(astar->closed = arr_init()) || !(astar->map = arr_init()))
 		return (NULL);
-	*(long long*)(&astar->size_x) = ((long long)size_x << 32) + size_y;
+	// *(long long*)(&astar->size_x) = ((long long)size_x << 32) + size_y;
+	astar->size_x = size_x;
+	astar->size_y = size_y;
 	qt = -1;
 	while (++qt < size_x * size_y)
 	{
@@ -113,6 +115,15 @@ void		clean_node(const size_t id, const long long val)
 	(void)id;
 }
 
+void		clear(t_astar *astar)
+{
+	arr_iter(astar->open, &clean_node);
+	arr_iter(astar->closed, &clean_node);
+	arr_clear(astar->open);
+	arr_clear(astar->closed);
+	astar->target = NULL;
+}
+
 t_array		*retrace_path(t_astar *astar)
 {
 	t_array		*path;
@@ -122,11 +133,10 @@ t_array		*retrace_path(t_astar *astar)
 	node = (t_anode*)arr_last(astar->closed);
 	while (node)
 	{
-		arr_unshift(path, (long long)node);
+		arr_push(path, (long long)node);
 		node = node->parent;
 	}
-	arr_iter(astar->open, &clean_node);
-	arr_iter(astar->closed, &clean_node);
+	clear(astar);
 	return (path);
 }
 
@@ -165,7 +175,10 @@ t_array		*calc_path(t_astar *astar)
 		if (arr_length(astar->open) == 0)
 			printf("Empty open set !!\n");
 		if (arr_length(astar->open) == 0)
+		{
+			clear(astar);
 			return (NULL);
+		}
 		node = get_cheapest_node(astar);
 		arr_find_destroy(astar->open, (long long)node);
 		arr_push(astar->closed, (long long)node);
@@ -183,6 +196,8 @@ t_array		*astar_get_path(t_astar *astar, const t_vector3 start, const t_vector3 
 	node = (t_anode*)arr_get(astar->map, (int)target.x + (int)target.y * astar->size_x);
 	astar->target = node;
 	node = (t_anode*)arr_get(astar->map, (int)start.x + (int)start.y * astar->size_x);
+	if (!node || !astar->target)
+		return (NULL);
 	node->h = get_dist(*node, *astar->target);
 	node->f = node->h;
 	arr_push(astar->open, (long long)node);

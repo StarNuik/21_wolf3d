@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 18:45:34 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/08 07:30:57 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/08 12:05:24 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	init(t_data *d)
 	d->scene.player.health = 69;
 	d->scene.player.ammo = 999;
 	read_map(d, "maps/test.wolf");
-	init_astar(d);
 	read_textures(d);
 	d->scene.map_loaded = d->map_origin;
+	init_astar(d);
 	init_sdl(d);
 	draw_bg(d);
 	draw_gui_bg(d);
