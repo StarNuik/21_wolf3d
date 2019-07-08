@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 17:02:55 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/07 07:40:49 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/08 03:15:06 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -507,9 +507,12 @@ long long			arr_last(t_array *array);
 size_t				arr_length(t_array *array);
 long long			arr_pop(t_array *array);
 long long			arr_shift(t_array *array);
+char				arr_contains(t_array *array, long long val);
 void				arr_iter(t_array *array, void (*f)(size_t, long long));
 void				arr_iterv(t_array *array, void *user_data,
 	void (*f)(size_t, long long, void *));
+void				arr_itervv(t_array *arr, void *user_data1,
+	void *user_data2, void (*f)(size_t, long long, void *, void *));
 long long			arr_drop(t_array *array, size_t index);
 size_t				arr_find(t_array *array, long long target);
 long long			arr_find_destroy(t_array *arr, long long target);
@@ -522,6 +525,7 @@ char				arr_topsorb(t_array *array, long long *source,
 char				arr_rtopsorb(t_array *array, long long *source,
 	size_t ammount);
 t_array				*arr_start(long long *source, size_t ammount);
+void				arr_clear(t_array *arr);
 void				arr_destroy(t_array *array);
 void				ft_putmem(void *ptr, size_t var_size, size_t len,
 	size_t indent);

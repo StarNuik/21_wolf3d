@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 15:04:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/07 09:39:53 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/08 07:50:37 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,27 @@
 # define OBJ_HEALTH	(t_object){{V3_ZERO, 26, 0.f, 0}, 0, -1, 2, 1, 25}
 # define OBJ_AMMO	(t_object){{V3_ZERO, 27, 0.f, 0}, 0, -1, 3, 1, 5}
 # define OBJ_NULL	(t_object){{V3_ZERO, -1, 0.f, 0}, 0, -1, -1, -1, -1}
+
+typedef struct		s_astarnode
+{
+	struct s_astarnode	*parent;
+	int					g;
+	int					h;
+	int					f;
+	int					x;
+	int					y;
+	char				walkable;
+}						t_anode;
+
+typedef struct			s_astar
+{
+	t_array				*map;
+	int					size_x;
+	int					size_y;
+	t_array				*open;
+	t_array				*closed;
+	t_anode				*target;
+}						t_astar;
 
 typedef struct			s_rend_obj
 {
@@ -159,7 +180,8 @@ typedef struct			s_sound
 }						t_sound;
 
 typedef struct			s_scene
-{	
+{
+	t_astar				*astar;
 	t_player			player;
 	t_array				*map_loaded;
 	int					map_x;
@@ -251,5 +273,8 @@ void					stop_audio(t_data *d, int num);
 void					audio_call(void *userdata, unsigned char *stream, int len);
 
 void					static_itoa(int num, int a[], int ct);
+
+t_astar					*astar_init(t_array *map, t_array *walkable_mask, int size_x, int size_y);
+t_array					*astar_get_path(t_astar *astar, t_vector3 start, t_vector3 target);
 
 #endif

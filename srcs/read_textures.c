@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 04:57:30 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/07 06:23:10 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/08 07:50:29 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,5 @@ void	read_textures(t_data *d)
 	read_texture_single(d, "./textures/sprites/health.png", 26, 0);
 	read_texture_single(d, "./textures/sprites/ammo.png", 27, 0);
 	read_texture_single(d, "./textures/sprites/table_broke.png", 28, 0);
+	read_texture_single(d, "./textures/enemies/heada1.bmp", 29, 0);
 }
