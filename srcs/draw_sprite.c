@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 13:59:06 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/05 15:12:03 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/08 09:04:03 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,8 @@ void		render_sprites(t_data *d)
 	while (--qt != (size_t)-1)
 	{
 		object = (t_rendobj*)arr_get(d->rend.sprite_queue, arr_get(d->rend.object_order, qt));
-		if (object->hidden)
-			continue ;
+		// if (object->hidden)
+		// 	continue ;
 		sub = ft_v3subtract(object->pos, d->scene.player.pos);
 		// (object->pickup && ft_v3dot2(sub) <= 1.f ? pickup(d, object) : 0);
 		angle = atan2(sub.y, sub.x) + FT_PI / 2.0 - FT_PI;

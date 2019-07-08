@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 15:04:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/08 07:50:37 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/08 09:50:35 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,47 @@
 # define GUI_GUN_X 205
 # define GUI_GUN_Y 10
 
-# define OBJ_CHAND	(t_object){{V3_ZERO, 13, 0.f, 0}, 0, -1, 0, 1, 0}
-# define OBJ_LAMP	(t_object){{V3_ZERO, 14, 0.f, 0}, 0, -1, 0, 1, 0}
-# define OBJ_TABLE	(t_object){{V3_ZERO, 15, 0.f, 0}, 20, 28, 0, 0, 0}
-# define OBJ_TREASU	(t_object){{V3_ZERO, 16, 0.f, 0}, 0, -1, 1, 1, 500}
-# define OBJ_BUSH	(t_object){{V3_ZERO, 17, 0.f, 0}, 0, -1, 0, 0, 0}
-# define OBJ_TREE	(t_object){{V3_ZERO, 18, 0.f, 0}, 20, 19, 0, 0, 0}
-# define OBJ_HEALTH	(t_object){{V3_ZERO, 26, 0.f, 0}, 0, -1, 2, 1, 25}
-# define OBJ_AMMO	(t_object){{V3_ZERO, 27, 0.f, 0}, 0, -1, 3, 1, 5}
-# define OBJ_NULL	(t_object){{V3_ZERO, -1, 0.f, 0}, 0, -1, -1, -1, -1}
+typedef struct			s_rend_obj
+{
+	t_vector3			pos;
+	int					tex_id;
+	float				dist_to_player;
+}						t_rendobj;
+
+# define OBJ_CHAND	(t_object){{V3_ZERO, 13, 0.f}, 0, -1, 0, 1, 0}
+# define OBJ_LAMP	(t_object){{V3_ZERO, 14, 0.f}, 0, -1, 0, 1, 0}
+# define OBJ_TABLE	(t_object){{V3_ZERO, 15, 0.f}, 20, 28, 0, 0, 0}
+# define OBJ_TREASU	(t_object){{V3_ZERO, 16, 0.f}, 0, -1, 1, 1, 500}
+# define OBJ_BUSH	(t_object){{V3_ZERO, 17, 0.f}, 0, -1, 0, 0, 0}
+# define OBJ_TREE	(t_object){{V3_ZERO, 18, 0.f}, 20, 19, 0, 0, 0}
+# define OBJ_HEALTH	(t_object){{V3_ZERO, 26, 0.f}, 0, -1, 2, 1, 25}
+# define OBJ_AMMO	(t_object){{V3_ZERO, 27, 0.f}, 0, -1, 3, 1, 5}
+# define OBJ_NULL	(t_object){{V3_ZERO, -1, 0.f}, 0, -1, -1, -1, -1}
+
+typedef struct			s_object
+{
+	t_rendobj			rend;
+	int					health;
+	int					broke_tex_id;
+	char				pickup;
+	char				walkthrough;
+	int					value;
+}						t_object;
+
+typedef struct s_data	t_data;
+typedef struct s_enemy	t_enemy;
+
+# define ENEMY_TEST (t_enemy){{V3_ZERO, 29, 0.f}, 500, .1f, &ai_test, NULL}
+# define ENEMY_NULL (t_enemy){{V3_ZERO, -1, 0.f}, -1, -1.f, NULL, NULL}
+
+typedef struct			s_enemy
+{
+	t_rendobj			rend;
+	int					health;
+	float				speed;
+	void				(*logic)(t_data*, t_enemy*);
+	t_array				*path;
+}						t_enemy;
 
 typedef struct		s_astarnode
 {
@@ -94,31 +126,6 @@ typedef struct			s_astar
 	t_array				*closed;
 	t_anode				*target;
 }						t_astar;
-
-typedef struct			s_rend_obj
-{
-	t_vector3			pos;
-	int					tex_id;
-	float				dist_to_player;
-	//! Get rid of this ugly hack
-	char				hidden;
-}						t_rendobj;
-
-typedef struct			s_object
-{
-	t_rendobj			rend;
-	int					health;
-	int					broke_tex_id;
-	char				pickup;
-	char				walkthrough;
-	int					value;
-}						t_object;
-
-typedef struct			s_enemy
-{
-	t_rendobj			rend;
-	int					health;
-}						t_enemy;
 
 typedef struct			s_castret
 {
@@ -238,6 +245,8 @@ void					map_exit(int code);
 void					init(t_data *d);
 void					init_sdl(t_data *d);
 void					read_map(t_data *d, char *path);
+char					parse_object(t_data *d, char *idk, int x, int y);
+char					parse_enemy(t_data *d, char *idk, int x, int y);
 void					read_audio(t_data *d);
 void					read_textures(t_data *d);
 
@@ -257,6 +266,8 @@ void					player_shoot(t_data *d);
 void					test_pickups(t_data *d);
 void					cast_shot(t_data *d, int damage);
 void					damage_object(t_data *d, t_object *object, int damage);
+
+void					ai_test(t_data *d, t_enemy *self);
 
 void					render_walls(t_data *d);
 void					render_sprites(t_data *d);

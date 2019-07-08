@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 20:46:55 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/07 06:34:14 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/08 09:27:46 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,40 +16,18 @@ char		parse_entity(t_data *d, char *idk)
 {
 	int			x;
 	int			y;
-	t_object	*cache;
+	// t_object	*cache;
 
 	x = (d->scene.map_x ? arr_length(d->map_origin) % d->scene.map_x : arr_length(d->map_origin));
 	y = (d->scene.map_x ? arr_length(d->map_origin) / d->scene.map_x : 0);
 	if (*idk == 'e')
-		(void)(1);
-	else if (*idk++ == 'o')
 	{
-		cache = ft_memalloc(sizeof(t_object));
-		(ft_atoi(idk) == 1 ? *cache = OBJ_CHAND : OBJ_NULL);
-		(ft_atoi(idk) == 2 ? *cache = OBJ_LAMP : OBJ_NULL);
-		(ft_atoi(idk) == 3 ? *cache = OBJ_TABLE : OBJ_NULL);
-		(ft_atoi(idk) == 4 ? *cache = OBJ_TREASU : OBJ_NULL);
-		(ft_atoi(idk) == 5 ? *cache = OBJ_BUSH : OBJ_NULL);
-		(ft_atoi(idk) == 6 ? *cache = OBJ_TREE : OBJ_NULL);
-		(ft_atoi(idk) == 7 ? *cache = OBJ_HEALTH : OBJ_NULL);
-		(ft_atoi(idk) == 8 ? *cache = OBJ_AMMO : OBJ_NULL);
-		(cache->rend.tex_id == -1 ? map_exit(-1) : 0);
-		// *cache = OBJ_LAMP;
-		cache->rend.pos = (t_vector3){x + 0.5, y + 0.5, 0.0};
-		if (cache->health > 0)
-		{
-			if (!arr_push(d->scene.destr_object_arr, (long long)cache))
-				return (0);
-		}
-		else if (cache->pickup > 0)
-		{
-			if (!arr_push(d->scene.pickup_arr, (long long)cache))
-				return (0);
-		}
-		else
-			if (!arr_push(d->scene.object_arr, (long long)cache))
-				return (0);
-		if (!spritequeue_add(d, &cache->rend))
+		if (!parse_enemy(d, idk, x, y))
+			return (0);
+	}
+	else if (*idk == 'o')
+	{
+		if (!parse_object(d, idk, x, y))
 			return (0);
 	}
 	return (arr_push(d->map_origin, 0));
@@ -135,6 +113,7 @@ void		read_map(t_data *d, char *path)
 	d->scene.object_arr = arr_init();
 	d->scene.destr_object_arr = arr_init();
 	d->scene.pickup_arr = arr_init();
+	d->scene.enemy_arr = arr_init();
 	d->rend.object_order = arr_init();
 	d->rend.sprite_queue = arr_init();
 	if (!d->map_origin)

@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 20:03:10 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/08 07:57:43 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/07/08 09:31:42 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void		debug_output(t_data *d)
 {
 	// printf("Sizeof t_object: %lu\n", sizeof(t_object));
-	printf("astar: %p\n", d->scene.astar);
+	// printf("astar: %p\n", d->scene.astar);
 	// printf("\n");
 	// printf("\n");
 	// printf("\n");
@@ -30,6 +30,7 @@ void		todo_list()
 	printf("\e[47m. Todo list:						.\n");
 	printf("\e[47m. Type	Desc						.\n");
 	printf("\e[100m. \e[32mADD\e[30m	Enemy pathfinding (use A*)			.\n");
+	printf("\e[100m. \e[32mADD\e[30m	A* event system					.\n");
 	printf("\e[100m. \e[32mADD\e[30m	Enemy animation					.\n");
 	printf("\e[100m. \e[32mADD\e[30m	Enemy attacks					.\n");
 	printf("\e[100m. \e[32mADD\e[30m	Enemy object					.\n");
@@ -40,6 +41,7 @@ void		todo_list()
 	printf("\e[100m. \e[32mADD\e[30m	Gate switches					.\n");
 	printf("\e[100m. \e[33mFIX\e[30m	Sprite size on close-ups			.\n");
 	printf("\e[100m. \e[33mFIX\e[30m	Change to camera plane				.\n");
+	printf("\e[100m. \e[33mFIX\e[30m	Optimizations are due				.\n");
 	printf("\e[39m\e[49m\n");
 	// printf("\e[100m. \e[33mFIX\e[30m	Sprite size			.\n");
 	// printf("\e[100m. \e[32mADD\e[30m	Enemy pathfinding (use random)	.\n");
