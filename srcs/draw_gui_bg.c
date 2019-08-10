@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 17:40:41 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/02 22:44:39 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/08/10 16:27:38 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ void		draw_gui_bg(t_data *d)
 		while (++y < TEX_HEIGHT)
 		{
 			tex_id = ((float)x / (float)TEX_WIDTH) * (float)tex.width;
-			tex_id += (int)(((float)(y - TEX_HEIGHT + 90) / 90.f) * (float)tex.height) * tex.width;
-			SDL_SetRenderDrawColor(d->sdl.ren, tex.data[tex_id * 3], tex.data[tex_id * 3 + 1], tex.data[tex_id * 3 + 2], 0xff);
+			tex_id += (int)(((float)(y - TEX_HEIGHT + 90) / 90.f)
+				* (float)tex.height) * tex.width;
+			SDL_SetRenderDrawColor(d->sdl.ren, tex.data[tex_id * 3],
+				tex.data[tex_id * 3 + 1], tex.data[tex_id * 3 + 2], 0xff);
 			SDL_RenderDrawPoint(d->sdl.ren, x, y);
 		}
 	}

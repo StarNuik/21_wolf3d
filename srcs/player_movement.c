@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/01 15:40:46 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/01 15:50:11 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/08/10 17:33:59 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,9 @@ t_vector3	rotate_vector(t_vector3 in, const float angle)
 	const float si = sin(-angle);
 	const float co = cos(-angle);
 
-	// angle = -angle;
 	in = (t_vector3){co * in.x - si * in.y, si * in.x + co * in.y, 0.0};
 	return (in);
 }
-
 
 void		move_player(t_data *d, t_vector3 dirv)
 {
@@ -30,10 +28,9 @@ void		move_player(t_data *d, t_vector3 dirv)
 	int			qt;
 	float		dist;
 
-	// dirv = (t_vector3){0, 1, 0};
-	angle = atan2(dirv.y, dirv.x) - FT_PI / 2.0 /* - FT_PI */;
-	angle = -angle + d->scene.player.lookAngle;
-	dirv = rotate_vector(dirv, d->scene.player.lookAngle);
+	angle = atan2(dirv.y, dirv.x) - FT_PI / 2.f;
+	angle = -angle + d->scene.player.look_angle;
+	dirv = rotate_vector(dirv, d->scene.player.look_angle);
 	dirv = ft_v3multnum(dirv, CONTROL_MOVEMENT_DELTA);
 	if (d->ctrl.speedhack)
 		dirv = ft_v3multnum(dirv, CONTROL_SPEEDHACK);

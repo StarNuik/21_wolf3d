@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 21:02:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/05 15:14:20 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/08/10 17:23:10 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,9 @@ void		render_pipe(t_data *d)
 	SDL_SetRenderDrawColor(d->sdl.ren, 0x00, 0x00, 0x00, 0x00);
 	SDL_SetRenderTarget(d->sdl.ren, d->sdl.tex_gui);
 	SDL_RenderClear(d->sdl.ren);
-	PR_START(1);
 	render_walls(d);
-	PR_END(1);
-	PR_START(2);
 	render_sprites(d);
-	PR_END(2);
-	PR_START(3);
 	render_gui(d);
-	PR_END(3);
 	SDL_SetRenderTarget(d->sdl.ren, NULL);
 	SDL_RenderCopy(d->sdl.ren, d->sdl.tex_bg, NULL, NULL);
 	SDL_RenderCopy(d->sdl.ren, d->sdl.tex_wall, NULL, NULL);

@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 15:04:36 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/08 09:50:35 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/08/10 17:36:38 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,12 @@
 # define WOLF_H
 # include "libft.h"
 # include <SDL.h>
-//? Be careful with this boi
 # include "stb_image.h"
-# include "profiler.h"
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
 # define TEX_WIDTH 711
 # define TEX_HEIGHT 400
-// # define TEX_WIDTH 640
-// # define TEX_HEIGHT 480
 # define TARGET_FPS 24
 # define TARGET_MS (1000 / (int)TARGET_FPS)
 
@@ -57,9 +53,6 @@
 # define GUI_WICON_Y 329
 # define GUI_WICON_W 107
 # define GUI_WICON_H 53
-// # define GUI_BG_HEIGHT 40 * GUI_ZOOM_FACTOR
-// # define GUI_NUM_WIDTH 8 * GUI_ZOOM_FACTOR
-// # define GUI_NUM_HEIGHT 16 * GUI_ZOOM_FACTOR
 # define GUI_GUN_SIZE 300
 # define GUI_GUN_X 205
 # define GUI_GUN_Y 10
@@ -91,8 +84,8 @@ typedef struct			s_object
 	int					value;
 }						t_object;
 
-typedef struct s_data	t_data;
-typedef struct s_enemy	t_enemy;
+struct s_data;
+struct s_enemy;
 
 # define ENEMY_TEST (t_enemy){{V3_ZERO, 29, 0.f}, 500, .1f, &ai_test, NULL}
 # define ENEMY_NULL (t_enemy){{V3_ZERO, -1, 0.f}, -1, -1.f, NULL, NULL}
@@ -102,11 +95,11 @@ typedef struct			s_enemy
 	t_rendobj			rend;
 	int					health;
 	float				speed;
-	void				(*logic)(t_data*, t_enemy*);
+	void				(*logic)(struct s_data*, struct s_enemy*);
 	t_array				*path;
 }						t_enemy;
 
-typedef struct		s_astarnode
+typedef struct			s_astarnode
 {
 	struct s_astarnode	*parent;
 	int					g;
@@ -158,7 +151,7 @@ typedef struct			s_controls
 typedef struct			s_player
 {
 	t_vector3			pos;
-	float				lookAngle;
+	float				look_angle;
 	int					score;
 	int					ammo;
 	int					health;
@@ -201,7 +194,7 @@ typedef struct			s_scene
 }						t_scene;
 
 typedef struct			s_sdl
-{	
+{
 	SDL_Window			*win;
 	SDL_Renderer		*ren;
 	SDL_Texture			*tex_bg;
@@ -227,7 +220,7 @@ typedef struct			s_renderer
 }						t_rend;
 
 typedef struct			s_data
-{	
+{
 	t_sdl				sdl;
 	t_array				*map_origin;
 	t_scene				scene;
@@ -281,11 +274,35 @@ void					sort_sprites(t_data *d);
 
 void					play_audio(t_data *d, int num);
 void					stop_audio(t_data *d, int num);
-void					audio_call(void *userdata, unsigned char *stream, int len);
+void					audio_call(void *userdata,
+	unsigned char *stream, int len);
+
+void					mouse_press_hook(t_data *d);
+void					mouse_release_hook(t_data *d);
+void					mouse_move_hook(t_data *d);
+
+void					check_walkable(const size_t id, const long long val,
+	void *test_val, void *walkable);
+int						get_dist(const t_anode a, const t_anode b);
+t_anode					*get_cheapest_node(t_astar *astar);
+void					work_neighbour(const size_t id, const long long val,
+	void *astar_v, void *node_v);
+void					clean_node(const size_t id, const long long val);
+void					clear(t_astar *astar);
+t_array					*retrace_path(t_astar *astar);
+void					get_neighbours(t_astar *astar, t_array *neighbours,
+	t_anode *node);
+t_array					*calc_path(t_astar *astar);
+t_array					*astar_get_path(t_astar *astar, const t_vector3 start,
+	const t_vector3 target);
+t_astar					*astar_init(t_array *map, t_array *walkable_mask,
+	const int size_x, const int size_y);
 
 void					static_itoa(int num, int a[], int ct);
 
-t_astar					*astar_init(t_array *map, t_array *walkable_mask, int size_x, int size_y);
-t_array					*astar_get_path(t_astar *astar, t_vector3 start, t_vector3 target);
+t_astar					*astar_init(t_array *map, t_array *walkable_mask,
+	int size_x, int size_y);
+t_array					*astar_get_path(t_astar *astar, t_vector3 start,
+	t_vector3 target);
 
 #endif

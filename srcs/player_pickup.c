@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 07:11:01 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/07 09:42:42 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/08/10 15:41:47 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void		pickup(t_data *d, t_object *obj)
 	(obj->pickup == 2 ? health_pickup(d, obj) : 0);
 	(obj->pickup == 3 ? ammo_pickup(d, obj) : 0);
 	spritequeue_remove(d, &obj->rend);
-	arr_drop(d->scene.pickup_arr, arr_find(d->scene.pickup_arr, (long long)obj));
+	arr_drop(d->scene.pickup_arr,
+		arr_find(d->scene.pickup_arr, (long long)obj));
 	(void)d;
 }
 

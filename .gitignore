@@ -1,4 +1,6 @@
 *.o
 *.d
 wolf3d
-SDL2.framework
+SDL2
+libft/*.c
+libft/Makefile

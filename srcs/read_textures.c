@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 04:57:30 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/08 07:50:29 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/08/10 15:38:18 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,16 @@ void	read_texture_single(t_data *d, char *path, int num, char load_alpha)
 		d->tex_pool[num].type);
 	if (!d->tex_pool[num].data)
 		try_exit(d);
+}
+
+void	read_textures_2(t_data *d)
+{
+	read_texture_single(d, "./textures/gui/smg_anim.png", 24, 0);
+	read_texture_single(d, "./textures/gui/bfg_anim.png", 25, 0);
+	read_texture_single(d, "./textures/sprites/health.png", 26, 0);
+	read_texture_single(d, "./textures/sprites/ammo.png", 27, 0);
+	read_texture_single(d, "./textures/sprites/table_broke.png", 28, 0);
+	read_texture_single(d, "./textures/enemies/heada1.bmp", 29, 0);
 }
 
 void	read_textures(t_data *d)
@@ -51,10 +61,5 @@ void	read_textures(t_data *d)
 	read_texture_single(d, "./textures/gui/font.png", 21, 0);
 	read_texture_single(d, "./textures/gui/gun_select.png", 22, 0);
 	read_texture_single(d, "./textures/gui/pistol_anim.png", 23, 0);
-	read_texture_single(d, "./textures/gui/smg_anim.png", 24, 0);
-	read_texture_single(d, "./textures/gui/bfg_anim.png", 25, 0);
-	read_texture_single(d, "./textures/sprites/health.png", 26, 0);
-	read_texture_single(d, "./textures/sprites/ammo.png", 27, 0);
-	read_texture_single(d, "./textures/sprites/table_broke.png", 28, 0);
-	read_texture_single(d, "./textures/enemies/heada1.bmp", 29, 0);
+	read_textures_2(d);
 }

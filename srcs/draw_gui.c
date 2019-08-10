@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 23:04:22 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/03 05:03:23 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/08/10 16:36:48 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,17 @@ void		draw_weapon_icon(t_data *d)
 	int				y;
 
 	x = GUI_WICON_X - 1;
-	// printf("%d\n", num);
 	while (++x < GUI_WICON_X + GUI_WICON_W)
 	{
 		y = GUI_WICON_Y - 1;
 		while (++y < GUI_WICON_Y + GUI_WICON_H)
 		{
-			tex_id = (int)((float)(x - GUI_WICON_X) / (float)GUI_WICON_W * 48.f) + d->scene.player.selected_gun * 48;
-			tex_id += (int)((float)(y - GUI_WICON_Y) / (float)GUI_WICON_H * 24.f) * tex.width;
-			SDL_SetRenderDrawColor(d->sdl.ren, tex.data[tex_id * 3], tex.data[tex_id * 3 + 1], tex.data[tex_id * 3 + 2], 0xff);
+			tex_id = (int)((float)(x - GUI_WICON_X) / (float)GUI_WICON_W * 48.f)
+				+ d->scene.player.selected_gun * 48;
+			tex_id += (int)((float)(y - GUI_WICON_Y) /
+				(float)GUI_WICON_H * 24.f) * tex.width;
+			SDL_SetRenderDrawColor(d->sdl.ren, tex.data[tex_id * 3],
+				tex.data[tex_id * 3 + 1], tex.data[tex_id * 3 + 2], 0xff);
 			SDL_RenderDrawPoint(d->sdl.ren, x, y);
 		}
 	}
@@ -47,9 +49,12 @@ void		draw_number(t_data *d, const int in_x, const int num)
 		y = GUI_NUM_Y - 1;
 		while (++y < GUI_NUM_Y + GUI_NUM_HEIGHT)
 		{
-			tex_id = (int)((float)(x - in_x) / (float)GUI_NUM_WIDTH * 8.f) + num * 8;
-			tex_id += (int)((float)(y - GUI_NUM_Y) / (float)GUI_NUM_HEIGHT * 16.f) * tex.width;
-			SDL_SetRenderDrawColor(d->sdl.ren, tex.data[tex_id * 3], tex.data[tex_id * 3 + 1], tex.data[tex_id * 3 + 2], 0xff);
+			tex_id = (int)((float)(x - in_x) / (float)GUI_NUM_WIDTH * 8.f)
+				+ num * 8;
+			tex_id += (int)((float)(y - GUI_NUM_Y) / (float)GUI_NUM_HEIGHT
+				* 16.f) * tex.width;
+			SDL_SetRenderDrawColor(d->sdl.ren, tex.data[tex_id * 3],
+				tex.data[tex_id * 3 + 1], tex.data[tex_id * 3 + 2], 0xff);
 			SDL_RenderDrawPoint(d->sdl.ren, x, y);
 		}
 	}

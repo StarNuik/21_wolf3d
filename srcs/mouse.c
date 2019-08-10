@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
+/*   mouse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/06 02:46:32 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/08/10 15:51:48 by sbosmer          ###   ########.fr       */
+/*   Created: 2019/08/10 16:16:09 by sbosmer           #+#    #+#             */
+/*   Updated: 2019/08/10 16:18:14 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-void		general_pipe(t_data *d)
+void		mouse_press_hook(t_data *d)
 {
-	while (1)
+	if (d->sdl.event.button.button == SDL_BUTTON_LEFT)
+		d->ctrl.lmb = 1;
+}
+
+void		mouse_release_hook(t_data *d)
+{
+	if (d->sdl.event.button.button == SDL_BUTTON_LEFT)
 	{
-		d->pr.frame_start = SDL_GetTicks();
-		event_router(d);
-		ray_viewport(d);
-		sort_sprites(d);
-		player_pipe(d);
-		enemy_pipe(d);
-		render_pipe(d);
-		wait_for_next_frame(d);
-		d->ticks++;
+		d->ctrl.lmb = 0;
+		d->scene.player.pistol_shot = 0;
 	}
-	try_exit(d);
+}
+
+void		mouse_move_hook(t_data *d)
+{
+	d->sdl.mouse_move_processed = 1;
+	d->ctrl.mouse_rel_x = d->sdl.event.motion.xrel;
+	d->ctrl.mouse_rel_y = d->sdl.event.motion.yrel;
 }

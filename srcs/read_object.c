@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 08:53:56 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/08 09:16:52 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/08/10 15:22:26 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ char		parse_object(t_data *d, char *idk, const int x, const int y)
 		if (!arr_push(d->scene.pickup_arr, (long long)cache))
 			return (0);
 	}
-	else
-		if (!arr_push(d->scene.object_arr, (long long)cache))
-			return (0);
+	else if (!arr_push(d->scene.object_arr, (long long)cache))
+		return (0);
 	if (!spritequeue_add(d, &cache->rend))
 		return (0);
 	return (1);

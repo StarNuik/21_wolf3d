@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 20:46:55 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/08 09:27:46 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/08/10 15:18:36 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ char		parse_entity(t_data *d, char *idk)
 {
 	int			x;
 	int			y;
-	// t_object	*cache;
 
-	x = (d->scene.map_x ? arr_length(d->map_origin) % d->scene.map_x : arr_length(d->map_origin));
+	x = (d->scene.map_x ? arr_length(d->map_origin) % d->scene.map_x
+						: arr_length(d->map_origin));
 	y = (d->scene.map_x ? arr_length(d->map_origin) / d->scene.map_x : 0);
 	if (*idk == 'e')
 	{
@@ -51,7 +51,8 @@ void		work_single(t_data *d, char *idk, int max_x)
 	(*idk == 's' ? test = arr_push(d->map_origin, -1) : 0);
 	(*idk == 'e' || *idk == 'o' ? test = parse_entity(d, idk) : 0);
 	(*idk == '.' ? test = arr_push(d->map_origin, 0) : 0);
-	(*idk >= '1' && *idk <= '6' ? test = arr_push(d->map_origin, *idk - '0') : 0);
+	(*idk >= '1' && *idk <= '6' ?
+		test = arr_push(d->map_origin, *idk - '0') : 0);
 	(test == -1 ? map_exit(1) : 0);
 	(test == 0 ? exit(5) : 0);
 }
@@ -108,7 +109,7 @@ void		work(t_data *d, int fd)
 void		read_map(t_data *d, char *path)
 {
 	int			fd;
-	
+
 	d->map_origin = arr_init();
 	d->scene.object_arr = arr_init();
 	d->scene.destr_object_arr = arr_init();

@@ -6,7 +6,7 @@
 /*   By: sbosmer <sbosmer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 11:55:16 by sbosmer           #+#    #+#             */
-/*   Updated: 2019/07/07 07:13:05 by sbosmer          ###   ########.fr       */
+/*   Updated: 2019/08/10 16:37:11 by sbosmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ void	audio_call(void *userdata, Uint8 *stream, int len)
 	}
 	len = (len > s->len_left ? s->len_left : len);
 	ft_memcpy(stream, s->pos, len);
-	// SDL_MixAudio(stream, s->pos, len, SDL_MIX_MAXVOLUME);
-
 	s->pos += len;
 	s->len_left -= len;
 }
