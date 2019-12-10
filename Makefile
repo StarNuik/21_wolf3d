@@ -4,12 +4,12 @@ SRCS_LIST = mouse.c spritequeue.c ai_test.c read_object.c read_enemy.c enemy.c a
 SRCS = $(addprefix $(SRCS_DIR), $(SRCS_LIST))
 OBJS = $(SRCS:.c=.o)
 DEPENDS = $(patsubst %.c, %.d, $(SRCS))
-INCL = -I includes/ -I libft/ -I SDL2/includes/
+INCL = -I includes/ -I libft/ `sdl2-config --cflags`
 FLAGS = -Wall -Wextra -Werror -fsanitize=address -g
-LIB = -L SDL2/ -lSDL2 -L libft/ -lft -lm
+LIB = `sdl2-config --libs` -L libft/ -lft -lm
 FRAMEWORK = -framework OpenGL -framework AppKit -framework Cocoa
 
-all: lib $(OBJS) $(NAME)
+all: $(OBJS) $(NAME)
 	@echo "\033[32mCompilation finished!\033[39m"
 
 -include $(DEPENDS)
@@ -20,16 +20,11 @@ all: lib $(OBJS) $(NAME)
 $(NAME): $(OBJS)
 	@gcc $(FLAGS) -o $(NAME) $(OBJS) $(LIB) $(SDL) $(FRAMEWORK)
 
-lib:
-	@make -C libft/
-
 clean:
 	@rm -f $(OBJS)
 	@rm -f $(DEPENDS)
-	@make -C libft/ clean
 
 fclean: clean
 	@rm -f $(NAME)
-	@make -C libft/ fclean
 
 re: fclean all
